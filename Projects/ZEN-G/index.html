@@ -1,0 +1,4110 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Website — ZEN-G AI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES & THEME SYSTEM
+    ============================================================ */
+    :root {
+      --font-display: 'Syne', sans-serif;
+      --font-body:    'DM Sans', sans-serif;
+      --speed-fast:   0.18s;
+      --speed-base:   0.32s;
+      --speed-slow:   0.56s;
+      --ease-spring:  cubic-bezier(0.34, 1.56, 0.64, 1);
+      --ease-smooth:  cubic-bezier(0.4, 0, 0.2, 1);
+      --ease-out:     cubic-bezier(0, 0, 0.2, 1);
+      --popup-w:      390px;
+      --popup-h:      610px;
+      --popup-right:  24px;
+      --popup-bottom: 24px;
+      --btn-size:     62px;
+      --radius-sm:   6px;
+      --radius-md:   14px;
+      --radius-lg:   20px;
+      --radius-xl:   28px;
+      --radius-pill: 999px;
+    }
+
+    /* ── DARK THEME ── */
+    [data-theme="dark"] {
+      --page-bg:    #07080d;
+      --page-text:  #e8e6ff;
+      --page-sub:   #4a4866;
+      --page-mesh1: rgba(90,60,200,0.15);
+      --page-mesh2: rgba(180,80,240,0.10);
+      --bg-base:     #0a0b0f;
+      --bg-elevated: #1a1d26;
+      --bg-input:    rgba(255,255,255,0.05);
+      /* --bg-bot:      linear-gradient(135deg,#1e2136 0%,#16192a 100%);
+      --bg-user:     linear-gradient(135deg,#6c4de6 0%,#9b59f5 100%);
+      --bg-btn:      linear-gradient(135deg,#7b5ef5 0%,#a06cf8 100%); */
+
+     --bg-bot:      linear-gradient(135deg,#1179db 0%,#0271d8 100%);
+      --bg-user:     linear-gradient(135deg,#067ff0 0%,#3686d1 100%);
+      --bg-btn:      linear-gradient(135deg,#1069bc 0%,#2b90ed 100%);
+
+      --bg-header:   rgba(10,11,18,0.98);
+      --accent-1:    #8b6af7;
+      --accent-2:    #b08bff;
+      --accent-glow: rgba(139,106,247,0.38);
+      --text-primary:   #f0eeff;
+      --text-secondary: #9895b0;
+      --text-muted:     #55536a;
+      --text-bot:       #ddd8ff;
+      --text-user:      #ffffff;
+      --border-subtle: rgba(255,255,255,0.06);
+      --border-mid:    rgba(255,255,255,0.11);
+      --border-accent: rgba(139,106,247,0.4);
+      --shadow-sm:    0 2px 12px rgba(0,0,0,0.4);
+      --shadow-md:    0 8px 32px rgba(0,0,0,0.55);
+      --shadow-glow:  0 0 40px rgba(139,106,247,0.18);
+      --popup-shadow: 0 28px 80px rgba(0,0,0,0.75), 0 0 0 1px rgba(139,106,247,0.2);
+      --tooltip-bg:   rgba(10,11,18,0.97);
+      --mic-active-bg:  rgba(239,68,68,0.14);
+      --mic-active-col: #ef4444;
+      --spk-active-bg:  rgba(52,211,153,0.14);
+      --spk-active-col: #34d399;
+      --mute-active-bg: rgba(245,158,11,0.14);
+      --mute-active-col:#f59e0b;
+    }
+
+    /* ── LIGHT THEME ── */
+    [data-theme="light"] {
+      --page-bg:    #f0eeff;
+      --page-text:  #1a1730;
+      --page-sub:   #9896b8;
+      --page-mesh1: rgba(108,77,230,0.07);
+      --page-mesh2: rgba(180,80,240,0.05);
+      --bg-base:     #f4f3ff;
+      --bg-elevated: #f9f8ff;
+      --bg-input:    rgba(0,0,0,0.04);
+      --bg-bot:      linear-gradient(135deg,#ede9ff 0%,#f5f2ff 100%);
+      --bg-user:     linear-gradient(135deg,#6c4de6 0%,#9b59f5 100%);
+      --bg-btn:      linear-gradient(135deg,#7b5ef5 0%,#a06cf8 100%);
+      --bg-header:   rgba(248,247,255,0.98);
+      --accent-1:    #6c4de6;
+      --accent-2:    #9b59f5;
+      --accent-glow: rgba(108,77,230,0.22);
+      --text-primary:   #1a1730;
+      --text-secondary: #5a5578;
+      --text-muted:     #9b98b5;
+      --text-bot:       #2e2a50;
+      --text-user:      #ffffff;
+      --border-subtle: rgba(0,0,0,0.06);
+      --border-mid:    rgba(0,0,0,0.10);
+      --border-accent: rgba(108,77,230,0.35);
+      --shadow-sm:    0 2px 12px rgba(108,77,230,0.08);
+      --shadow-md:    0 8px 32px rgba(108,77,230,0.14);
+      --shadow-glow:  0 0 40px rgba(108,77,230,0.1);
+      --popup-shadow: 0 28px 80px rgba(108,77,230,0.22), 0 0 0 1px rgba(108,77,230,0.15);
+      --tooltip-bg:   rgba(255,255,255,0.97);
+      --mic-active-bg:  rgba(239,68,68,0.10);
+      --mic-active-col: #dc2626;
+      --spk-active-bg:  rgba(16,185,129,0.10);
+      --spk-active-col: #059669;
+      --mute-active-bg: rgba(245,158,11,0.10);
+      --mute-active-col:#d97706;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+    html { scroll-behavior:smooth; }
+    body { font-family:var(--font-body); background:var(--page-bg); color:var(--page-text); min-height:100vh; overflow-x:hidden; }
+
+    /* ============================================================
+       PAGE BG MESH
+    ============================================================ */
+    .page-mesh { position:fixed; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .page-mesh::before { content:''; position:absolute; width:60vw; height:60vw; border-radius:50%; background:var(--page-mesh1); filter:blur(90px); top:-15%; left:-10%; animation:pmesh1 20s ease-in-out infinite alternate; }
+    .page-mesh::after  { content:''; position:absolute; width:50vw; height:50vw; border-radius:50%; background:var(--page-mesh2); filter:blur(80px); bottom:-10%; right:-5%; animation:pmesh2 25s ease-in-out infinite alternate; }
+    @keyframes pmesh1 { from{transform:translate(0,0)} to{transform:translate(6vw,8vh)} }
+    @keyframes pmesh2 { from{transform:translate(0,0)} to{transform:translate(-5vw,-7vh)} }
+
+    /* ============================================================
+       YOUR WEBSITE CONTENT — replace with your own HTML
+    ============================================================ */
+    .page-content { position:relative; z-index:1; display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; text-align:center; padding:60px 24px; }
+    .page-content h1 { font-family:var(--font-display); font-size:clamp(32px,6vw,64px); font-weight:800; letter-spacing:-2px; background:linear-gradient(135deg,var(--accent-2) 0%,var(--page-text) 55%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:20px; line-height:1.1; }
+    .page-content p { font-size:17px; color:var(--page-sub); max-width:500px; line-height:1.8; margin-bottom:20px; }
+    .page-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:var(--radius-pill); border:1px solid var(--border-accent); background:var(--bg-input); color:var(--accent-2); font-size:13px; font-weight:500; animation:badge-in 0.8s var(--ease-spring) 0.3s both; }
+    .page-badge-dot { width:7px; height:7px; border-radius:50%; background:#34d399; animation:bdot 2.5s ease-in-out infinite; }
+    @keyframes badge-in { from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes bdot { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,0.5)} 50%{box-shadow:0 0 0 5px rgba(52,211,153,0)} }
+
+    /* ============================================================
+       FLOATING LAUNCHER BUTTON
+    ============================================================ */
+    .chat-launcher { position:fixed; bottom:var(--popup-bottom); right:var(--popup-right); z-index:9999; width:var(--btn-size); height:var(--btn-size); border-radius:50%; border:none; background:var(--bg-btn); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:26px; box-shadow:0 8px 30px rgba(0,0,0,0.3); outline:none; transition:transform var(--speed-fast) var(--ease-spring),box-shadow var(--speed-base) var(--ease-smooth); animation:btn-float 3s ease-in-out infinite; }
+    @keyframes btn-float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-7px)} }
+    .chat-launcher:hover { transform:translateY(-9px) scale(1.1) !important; box-shadow:0 16px 48px rgba(0,0,0,0.35),0 0 40px var(--accent-glow); animation-play-state:paused; }
+    .chat-launcher:active { transform:scale(0.87) !important; }
+    .chat-launcher::before,.chat-launcher::after { content:''; position:absolute; inset:0; border-radius:50%; background:var(--accent-1); opacity:0; animation:ping 2.8s ease-out infinite; }
+    .chat-launcher::after { animation-delay:1.4s; }
+    @keyframes ping { 0%{transform:scale(1);opacity:0.5} 80%,100%{transform:scale(2);opacity:0} }
+    .launcher-wave { display:inline-block; transform-origin:70% 80%; animation:lwave 2.2s ease-in-out infinite; position:relative; z-index:1; }
+    @keyframes lwave { 0%{transform:rotate(0)} 10%{transform:rotate(-15deg)} 20%{transform:rotate(15deg)} 30%{transform:rotate(-10deg)} 40%{transform:rotate(10deg)} 50%,100%{transform:rotate(0)} }
+    .launcher-badge { position:absolute; top:2px; right:2px; width:15px; height:15px; border-radius:50%; background:#34d399; border:2px solid var(--page-bg); transform:scale(0); transition:transform var(--speed-fast) var(--ease-spring); }
+    .launcher-badge.show { transform:scale(1); }
+    .launcher-tooltip { position:fixed; bottom:calc(var(--popup-bottom) + var(--btn-size) + 12px); right:var(--popup-right); z-index:9998; background:var(--tooltip-bg); color:var(--text-primary); font-family:var(--font-body); font-size:13px; font-weight:500; padding:8px 14px; border-radius:10px; border:1px solid var(--border-mid); white-space:nowrap; box-shadow:var(--shadow-md); opacity:0; transform:translateX(10px); pointer-events:none; transition:opacity var(--speed-base) var(--ease-smooth),transform var(--speed-base) var(--ease-spring); }
+    .launcher-tooltip.show { opacity:1; transform:translateX(0); }
+    .launcher-tooltip::after { content:''; position:absolute; bottom:-6px; right:20px; width:12px; height:6px; background:var(--tooltip-bg); clip-path:polygon(0 0,100% 0,50% 100%); }
+
+    /* ============================================================
+       CHAT POPUP
+    ============================================================ */
+    .chat-popup { position:fixed; bottom:calc(var(--popup-bottom) + var(--btn-size) + 14px); right:var(--popup-right); z-index:9997; width:var(--popup-w); height:var(--popup-h); border-radius:20px; overflow:hidden; display:flex; flex-direction:column; background:var(--bg-base); border:1px solid var(--border-mid); box-shadow:var(--popup-shadow); opacity:0; transform:scale(0.65) translateY(20px); transform-origin:bottom right; pointer-events:none; transition:opacity var(--speed-base) var(--ease-smooth),transform var(--speed-base) var(--ease-spring); }
+    .chat-popup.open { opacity:1; transform:scale(1) translateY(0); pointer-events:all; }
+    .chat-mesh { position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden; }
+    .chat-mesh::before { content:''; position:absolute; width:200px; height:200px; border-radius:50%; background:var(--page-mesh1); filter:blur(50px); top:-50px; left:-30px; animation:pmesh1 18s ease-in-out infinite alternate; }
+    .chat-mesh::after  { content:''; position:absolute; width:160px; height:160px; border-radius:50%; background:var(--page-mesh2); filter:blur(40px); bottom:-30px; right:-20px; animation:pmesh2 22s ease-in-out infinite alternate; }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .chat-header { position:relative; z-index:2; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:11px 13px; background:var(--bg-header); border-bottom:1px solid var(--border-subtle); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
+    .chat-header-left { display:flex; align-items:center; gap:10px; }
+    .chat-logo { width:30px; height:33px; border-radius:15px; background:var(--bg-btn); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; box-shadow:0 4px 12px var(--accent-glow); animation:logo-pulse 3s ease-in-out infinite; }
+    .chat-logo::before { content:''; position:absolute; inset:-3px; border-radius:13px; background:var(--bg-btn); opacity:0.25; animation:logo-ring 3s ease-in-out infinite; }
+    .chat-logo svg { position:relative; z-index:1; }
+    @keyframes logo-pulse { 0%,100%{box-shadow:0 0 0 0 var(--accent-glow)} 50%{box-shadow:0 0 0 7px transparent} }
+    @keyframes logo-ring  { 0%,100%{transform:scale(1);opacity:0.25} 50%{transform:scale(1.35);opacity:0} }
+    .chat-brand { font-family:var(--font-display); font-weight:700; font-size:14px; letter-spacing:-0.2px; background:linear-gradient(135deg,var(--accent-2) 0%,var(--text-primary) 60%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .chat-status { display:flex; align-items:center; gap:5px; font-size:10.5px; color:var(--text-secondary); margin-top:1px; }
+    .chat-status-dot { width:6px; height:6px; border-radius:50%; background:#34d399; animation:sdot 2.5s ease-in-out infinite; }
+    @keyframes sdot { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,0.5)} 50%{box-shadow:0 0 0 4px rgba(52,211,153,0)} }
+    .chat-header-actions { display:flex; align-items:center; gap:4px; }
+
+    /* Header icon buttons */
+    .hdr-btn { width:28px; height:28px; border-radius:7px; border:1px solid var(--border-mid); background:var(--bg-input); color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all var(--speed-fast) var(--ease-spring); }
+    .hdr-btn:hover { background:var(--bg-elevated); color:var(--accent-1); transform:scale(1.1); }
+    .hdr-btn:active { transform:scale(0.9); }
+    #hdr-theme:hover { transform:scale(1.1) rotate(18deg); }
+    #hdr-close:hover { transform:scale(1.1) rotate(90deg); background:rgba(239,68,68,0.12); color:#f87171; border-color:rgba(239,68,68,0.3); }
+    #hdr-export:disabled { opacity:0.3; cursor:not-allowed; pointer-events:none; }
+
+    /* Mute button — amber when muted */
+    #hdr-mute.muted { background:var(--mute-active-bg); color:var(--mute-active-col); border-color:rgba(245,158,11,0.4); }
+    #hdr-mute.muted:hover { box-shadow:0 0 10px rgba(245,158,11,0.3); }
+
+    /* ============================================================
+       EXPORT MODAL
+    ============================================================ */
+    .export-overlay {
+      position:absolute; inset:0; z-index:9999;
+      background:rgba(0,0,0,0.45);
+      display:flex; align-items:flex-end; justify-content:center;
+      opacity:0; pointer-events:none;
+      transition:opacity var(--speed-base) var(--ease-smooth);
+      border-radius:20px; overflow:hidden;
+    }
+    .export-overlay.show { opacity:1; pointer-events:all; }
+    .export-sheet {
+      width:100%; background:var(--bg-elevated);
+      border-top:1px solid var(--border-mid);
+      border-radius:16px 16px 0 0;
+      padding:18px 16px 22px;
+      transform:translateY(100%);
+      transition:transform var(--speed-base) var(--ease-spring);
+    }
+    .export-overlay.show .export-sheet { transform:translateY(0); }
+    .export-title {
+      font-family:var(--font-display); font-weight:700; font-size:14px;
+      color:var(--text-primary); margin-bottom:4px;
+    }
+    .export-sub { font-size:11px; color:var(--text-secondary); margin-bottom:16px; }
+    .export-options { display:flex; flex-direction:column; gap:8px; margin-bottom:14px; }
+    .export-opt {
+      display:flex; align-items:center; gap:12px;
+      padding:11px 13px; border-radius:12px;
+      border:1px solid var(--border-accent);
+      background:var(--bg-input); cursor:pointer;
+      transition:background var(--speed-fast), transform var(--speed-fast) var(--ease-spring), box-shadow var(--speed-fast);
+    }
+    .export-opt:hover { background:var(--accent-glow); box-shadow:0 3px 12px var(--accent-glow); transform:translateY(-1px); }
+    .export-opt:active { transform:scale(0.97); }
+    .export-opt-icon {
+      width:34px; height:34px; border-radius:9px;
+      background:var(--bg-btn); color:#fff;
+      display:flex; align-items:center; justify-content:center;
+      font-size:16px; flex-shrink:0;
+    }
+    .export-opt-info { flex:1; }
+    .export-opt-name { font-size:13px; font-weight:500; color:var(--text-primary); }
+    .export-opt-desc { font-size:11px; color:var(--text-secondary); margin-top:1px; }
+    .export-cancel {
+      width:100%; padding:9px; border-radius:10px;
+      border:1px solid var(--border-mid); background:var(--bg-input);
+      color:var(--text-secondary); font-family:var(--font-body); font-size:13px;
+      cursor:pointer; transition:background var(--speed-fast), color var(--speed-fast);
+    }
+    .export-cancel:hover { background:var(--bg-elevated); color:var(--text-primary); }
+    .export-success {
+      display:none; align-items:center; gap:8px;
+      padding:9px 13px; border-radius:10px;
+      background:rgba(52,211,153,0.12); border:1px solid rgba(52,211,153,0.3);
+      color:#34d399; font-size:12px; margin-bottom:10px;
+    }
+    .export-success.show { display:flex; }
+
+    /* ============================================================
+       CHAT BODY
+    ============================================================ */
+    .chat-body { position:relative; z-index:1; flex:1; overflow-y:auto; overflow-x:hidden; padding:0px 12px 8px; scroll-behavior:auto; scrollbar-width:thin; scrollbar-color:var(--border-mid) transparent; }
+    .chat-body::-webkit-scrollbar { width:3px; }
+    .chat-body::-webkit-scrollbar-thumb { background:var(--border-mid); border-radius:2px; }
+    .chat-fade { position:sticky; top:0; height:28px; margin:-16px -12px 0; background:linear-gradient(to bottom,var(--bg-base),transparent); z-index:3; pointer-events:none; }
+
+    /* ============================================================
+       GREETING
+    ============================================================ */
+    .chat-greeting { text-align:center; padding:22px 14px 16px; animation:fade-up var(--speed-slow) var(--ease-out) both; }
+    @keyframes fade-up { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+    .greeting-orb { width:52px; height:52px; border-radius:16px; background:var(--bg-btn); margin:0 auto 12px; display:flex; align-items:center; justify-content:center; font-size:23px; box-shadow:0 8px 28px var(--accent-glow); animation:gorb 4s ease-in-out infinite; }
+    @keyframes gorb { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+    .chat-greeting h3 { font-family:var(--font-display); font-weight:700; font-size:16px; color:var(--text-primary); margin-bottom:6px; }
+    .chat-greeting p  { font-size:12px; color:var(--text-secondary); line-height:1.6; margin-bottom:14px; }
+    .chips { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; }
+    .chip { padding:5px 11px; border-radius:var(--radius-pill); border:1px solid var(--border-accent); background:var(--bg-input); color:var(--accent-2); font-size:11px; font-weight:500; cursor:pointer; transition:background var(--speed-fast),transform var(--speed-fast) var(--ease-spring),box-shadow var(--speed-fast); }
+    .chip:hover { background:var(--accent-glow); box-shadow:0 4px 14px var(--accent-glow); transform:translateY(-2px) scale(1.04); }
+    .chip:active { transform:scale(0.95); }
+
+    /* ============================================================
+       MESSAGES
+    ============================================================ */
+    .msg-row { display:flex; align-items:flex-end; gap:8px; margin-bottom:5px; animation:msg-in var(--speed-base) var(--ease-spring) both; }
+    @keyframes msg-in { from{opacity:0;transform:translateY(14px) scale(0.96)} to{opacity:1;transform:translateY(0) scale(1)} }
+    .msg-row.bot  { flex-direction:row; }
+    .msg-row.user { flex-direction:row-reverse; }
+    .msg-avatar { flex-shrink:0; width:26px; height:26px; border-radius:8px; background:var(--bg-btn); display:flex; align-items:center; justify-content:center; font-size:12px; box-shadow:0 3px 10px var(--accent-glow); transition:transform var(--speed-fast) var(--ease-spring); }
+    .msg-avatar:hover { transform:scale(1.12) rotate(-6deg); }
+
+    .bubble { max-width:min(74%,275px); padding:9px 12px; border-radius:var(--radius-lg); font-size:13px; line-height:1.65; word-break:break-word; position:relative; }
+    .msg-row.bot  .bubble { background:var(--bg-bot); color:var(--text-bot); border:1px solid var(--border-subtle); border-bottom-left-radius:var(--radius-sm); box-shadow:var(--shadow-sm),inset 0 1px 0 rgba(255,255,255,0.04); backdrop-filter:blur(8px); }
+    .msg-row.user .bubble { background:var(--bg-user); color:var(--text-user); border-bottom-right-radius:var(--radius-sm); box-shadow:var(--shadow-sm),0 0 18px var(--accent-glow); }
+    .msg-row.err  .bubble { background:rgba(239,68,68,0.1); color:#f87171; border:1px solid rgba(239,68,68,0.25); border-bottom-left-radius:var(--radius-sm); }
+    .bubble-time { display:block; font-size:10px; color:var(--text-muted); margin-top:4px; }
+    .msg-row.user .bubble-time { text-align:right; color:rgba(255,255,255,0.4); }
+    .bubble strong { font-weight:600; }
+    .bubble em     { font-style:italic; }
+    .bubble code   { background:rgba(139,106,247,0.14); padding:1px 4px; border-radius:4px; font-family:'Courier New',monospace; font-size:11.5px; color:var(--accent-2); }
+    .bubble ul,.bubble ol { padding-left:15px; margin:4px 0; }
+    .bubble li { margin-bottom:2px; }
+    .bubble h3 { font-size:13px; font-weight:600; margin:6px 0 3px; }
+
+    /* ── SPEAK BUTTON on bot bubbles ── */
+    .bubble-footer { display:flex; align-items:center; justify-content:flex-start; gap:4px; margin-top:5px; }
+    .speak-btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      width:20px; height:20px; border-radius:5px;
+      border:1px solid var(--border-mid); background:var(--bg-input);
+      color:var(--text-muted); cursor:pointer;
+      transition:all var(--speed-fast) var(--ease-smooth);
+    }
+    .speak-btn:hover { background:var(--spk-active-bg); color:var(--spk-active-col); border-color:rgba(52,211,153,0.35); }
+    /* Active speaking state — green pulsing ring */
+    .speak-btn.speaking {
+      background:var(--spk-active-bg); color:var(--spk-active-col);
+      border-color:rgba(52,211,153,0.4);
+      animation:speak-pulse 1.1s ease-in-out infinite;
+    }
+    @keyframes speak-pulse { 0%,100%{box-shadow:0 0 0 0 rgba(52,211,153,0.45)} 50%{box-shadow:0 0 0 5px rgba(52,211,153,0)} }
+
+    /* ============================================================
+       TYPING INDICATOR
+    ============================================================ */
+    .typing-bubble { background:var(--bg-bot); border:1px solid var(--border-subtle); border-bottom-left-radius:var(--radius-sm); padding:11px 14px; display:flex; align-items:center; gap:5px; border-radius:var(--radius-lg); backdrop-filter:blur(8px); }
+    .typing-dot { width:6px; height:6px; border-radius:50%; background:var(--accent-1); animation:tbounce 1.2s ease-in-out infinite; }
+    .typing-dot:nth-child(1){animation-delay:0ms} .typing-dot:nth-child(2){animation-delay:180ms} .typing-dot:nth-child(3){animation-delay:360ms}
+    @keyframes tbounce { 0%,60%,100%{transform:translateY(0);opacity:0.45} 30%{transform:translateY(-7px);opacity:1} }
+
+    /* ── TYPEWRITER CURSOR ── */
+    .typewriter-cursor {
+      display:inline-block; width:2px; height:1em;
+      background:var(--accent-1); margin-left:2px;
+      vertical-align:text-bottom; border-radius:1px;
+      animation:cursor-blink 0.7s step-end infinite;
+    }
+    @keyframes cursor-blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    .scroll-down-btn { position:absolute; bottom:90px; right:12px; z-index:5; width:28px; height:28px; border-radius:50%; background:var(--bg-elevated); border:1px solid var(--border-mid); color:var(--text-secondary); cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-md); opacity:0; transform:translateY(6px) scale(0.8); transition:opacity var(--speed-base),transform var(--speed-base) var(--ease-spring); pointer-events:none; }
+    .scroll-down-btn.show { opacity:1; transform:translateY(0) scale(1); pointer-events:all; }
+    .scroll-down-btn:hover { background:var(--bg-btn); color:white; border-color:transparent; }
+
+    /* ============================================================
+       INPUT AREA
+    ============================================================ */
+    .chat-input-area { position:relative; z-index:2; flex-shrink:0; padding:9px 11px 11px; background:var(--bg-header); border-top:1px solid var(--border-subtle); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); }
+    .input-shell { display:flex; align-items:flex-end; gap:6px; background:var(--bg-input); border:1.5px solid var(--border-mid); border-radius:var(--radius-xl); padding:7px 7px 7px 7px; transition:border-color var(--speed-fast),box-shadow var(--speed-fast); }
+    .input-shell:focus-within { border-color:var(--accent-1); box-shadow:0 0 0 3px var(--accent-glow),var(--shadow-glow); }
+    .chat-textarea { flex:1; background:transparent; border:none; outline:none; resize:none; font-family:var(--font-body); font-size:13px; color:var(--text-primary); line-height:1.55; max-height:100px; overflow-y:auto; scrollbar-width:none; padding:5px 0; }
+    .chat-textarea::-webkit-scrollbar { display:none; }
+    .chat-textarea::placeholder { color:var(--text-muted); }
+
+    /* ── MIC BUTTON ── */
+    .input-icon-btn {
+      flex-shrink:0; width:32px; height:32px; border-radius:9px;
+      border:1px solid var(--border-mid); background:var(--bg-input);
+      color:var(--text-secondary); cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:all var(--speed-fast) var(--ease-spring);
+    }
+    .input-icon-btn:hover { background:var(--bg-elevated); color:var(--accent-1); transform:scale(1.08); border-color:var(--border-accent); }
+    .input-icon-btn:active { transform:scale(0.9); }
+
+    /* Listening state — red pulsing ring */
+    .input-icon-btn.listening {
+      background:var(--mic-active-bg) !important;
+      color:var(--mic-active-col) !important;
+      border-color:rgba(239,68,68,0.45) !important;
+      animation:mic-ring 0.9s ease-in-out infinite !important;
+    }
+    @keyframes mic-ring { 0%,100%{box-shadow:0 0 0 0 rgba(239,68,68,0.5)} 50%{box-shadow:0 0 0 6px rgba(239,68,68,0)} }
+
+    /* ── SEND BUTTON ── */
+    .send-btn { flex-shrink:0; width:32px; height:32px; border-radius:9px; border:none; background:var(--bg-btn); color:white; cursor:pointer; display:flex; align-items:center; justify-content:center; box-shadow:0 4px 14px var(--accent-glow); transition:transform var(--speed-fast) var(--ease-spring),opacity var(--speed-fast),box-shadow var(--speed-fast); }
+    .send-btn:hover:not(:disabled) { transform:scale(1.12) translateY(-1px); box-shadow:0 8px 22px var(--accent-glow); }
+    .send-btn:active:not(:disabled){ transform:scale(0.88); }
+    .send-btn:disabled { opacity:0.3; cursor:not-allowed; }
+
+    /* Input footer: voice status + char count */
+    .input-footer { display:flex; justify-content:space-between; align-items:center; padding:4px 2px 0; min-height:18px; }
+    .char-count { font-size:10px; color:var(--text-muted); }
+    .char-count.warn   { color:#f59e0b; }
+    .char-count.danger { color:#ef4444; }
+
+    /* Voice status indicator below input */
+    .voice-status { display:flex; align-items:center; gap:5px; font-size:11px; color:var(--text-muted); opacity:0; transition:opacity var(--speed-fast); }
+    .voice-status.active   { opacity:1; color:var(--mic-active-col); }
+    .voice-status.speaking { opacity:1; color:var(--spk-active-col); }
+    .voice-dot { width:5px; height:5px; border-radius:50%; background:currentColor; animation:tbounce 1.1s ease-in-out infinite; }
+
+    /* ============================================================
+       RESPONSIVE — full screen on mobile
+    ============================================================ */
+    @media (max-width:460px) {
+      :root { --popup-w:100vw; --popup-h:100dvh; --popup-right:0px; --popup-bottom:0px; }
+      .chat-popup { bottom:0; right:0; border-radius:20px 20px 0 0; transform-origin:bottom center; }
+      .chat-launcher { display:none; }
+    }
+
+    button:focus-visible, textarea:focus-visible { outline:2px solid var(--accent-1); outline-offset:2px; }
+    .spacer { height:6px; }
+
+    /* ============================================================
+       OPTION PICKER — question chips shown after fuzzy match
+    ============================================================ */
+    .option-bubble { padding:10px 12px 10px !important; max-width:min(90%,320px) !important; }
+    .option-intro { display:block; font-size:12px; color:var(--text-secondary); margin-bottom:8px; font-style:italic; }
+    .options-list { display:flex; flex-direction:column; gap:6px; margin-bottom:4px; }
+    .option-btn {
+      display:flex; align-items:flex-start; gap:8px;
+      width:100%; text-align:left;
+      padding:7px 10px; border-radius:10px;
+      border:1px solid var(--border-accent);
+      background:var(--bg-input);
+      color:var(--text-primary);
+      font-family:var(--font-body); font-size:12px; line-height:1.5;
+      cursor:pointer;
+      transition:background var(--speed-fast), transform var(--speed-fast) var(--ease-spring), box-shadow var(--speed-fast);
+    }
+    .option-btn:hover:not(:disabled) {
+      background:var(--accent-glow);
+      border-color:var(--accent-1);
+      box-shadow:0 3px 12px var(--accent-glow);
+      transform:translateY(-1px);
+    }
+    .option-btn:active:not(:disabled) { transform:scale(0.97); }
+    .option-btn.already-asked {
+      opacity:0.38;
+      cursor:not-allowed;
+      border-style:dashed;
+      pointer-events:none;
+    }
+    .option-btn.already-asked .option-num {
+      background: var(--text-muted);
+    }
+    .option-btn.just-clicked {
+      opacity:0.45;
+      cursor:not-allowed;
+      pointer-events:none;
+      border-color: var(--accent-1);
+      background: var(--accent-glow);
+    }
+    .option-num {
+      flex-shrink:0;
+      width:18px; height:18px; border-radius:50%;
+      background:var(--bg-btn); color:#fff;
+      font-size:10px; font-weight:700;
+      display:flex; align-items:center; justify-content:center;
+      margin-top:1px;
+    }
+    .option-text { flex:1; }
+    .show-more-btn {
+      display:block; width:100%; margin-top:6px;
+      padding:5px 10px; border-radius:8px;
+      border:1px dashed var(--border-accent);
+      background:transparent; color:var(--accent-2);
+      font-family:var(--font-body); font-size:11px;
+      cursor:pointer; text-align:center;
+      transition:background var(--speed-fast), color var(--speed-fast);
+    }
+    .show-more-btn:hover:not(:disabled) { background:var(--accent-glow); color:var(--text-primary); }
+    /* Day Name */
+    .date-sep {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 10px 0 6px;
+   }
+   .date-sep-pill {
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-mid);
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      box-shadow: var(--shadow-sm);
+      user-select: none;
+   }
+  </style>
+</head>
+<body>
+
+<div class="page-mesh" aria-hidden="true"></div>
+
+<!-- ============================================================
+     YOUR WEBSITE CONTENT — replace with your actual site HTML
+============================================================ -->
+<div class="page-content">
+  <div class="page-badge"><span class="page-badge-dot"></span>Powered by Edvantech</div>
+  <br/>
+  <h1>Your Learning<br/>Platform</h1>
+  <p>Welcome to your course portal. Get instant help from ZEN-G AI — your 24/7 intelligent course assistant.</p>
+  <p style="font-size:13px;opacity:0.3;margin-top:4px;">👇 Click the floating button at bottom-right to open chat</p>
+</div>
+
+<!-- ============================================================
+     FLOATING LAUNCHER BUTTON
+============================================================ -->
+<button class="chat-launcher" id="chat-launcher" aria-label="Open ZEN-G AI" aria-expanded="false">
+  <span id="launcher-emoji">
+    <img  src="./Sentra.png" alt="ZEN-G AI" width="25" height="40" style="display:block;filter:drop-shadow(0 0 2px rgba(108,77,230,0.4));">
+  </span>
+  <span class="launcher-badge" id="launcher-badge" aria-hidden="true"></span>
+</button>
+<div class="launcher-tooltip" id="launcher-tooltip">👋 Chat with ZEN-G AI</div>
+
+<!-- ============================================================
+     CHAT POPUP
+============================================================ -->
+<div class="chat-popup" id="chat-popup" role="dialog" aria-modal="true" aria-label="ZEN-G AI Chat" aria-hidden="true">
+  <div class="chat-mesh" aria-hidden="true"></div>
+
+  <!-- HEADER -->
+  <div class="chat-header">
+    <div class="chat-header-left">
+      <div class="chat-logo" aria-hidden="true">
+        <svg width="15" height="15" viewBox="0 0 20 20" fill="none">
+              <img  src="./Avatar.png" alt="ZEN-G Logo" width="45" height="35" style="display:block;filter:drop-shadow(0 0 2px rgba(108,77,230,0.4));">
+
+        </svg>
+      </div>
+      <div>
+        <div class="chat-brand">ZEN-G AI</div>
+        <div class="chat-status">
+          <span class="chat-status-dot" aria-hidden="true"></span>
+          <span id="status-text">Online</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="chat-header-actions">
+
+      <!-- 🔇 MUTE / UNMUTE auto-TTS -->
+      <button class="hdr-btn muted" id="hdr-mute" aria-label="Mute voice" title="Mute auto-speak">
+        <svg id="mute-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+          <line x1="23" y1="9" x2="17" y2="15"/>
+          <line x1="17" y1="9" x2="23" y2="15"/>
+        </svg>
+      </button>
+
+      <!-- 📥 Export transcript -->
+      <button class="hdr-btn" id="hdr-export" aria-label="Download transcript" title="No messages to export" disabled>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+      </button>
+
+      <!-- 🗑 Clear chat -->
+      <button class="hdr-btn" id="hdr-clear" aria-label="Clear chat" title="Clear chat">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <polyline points="3 6 5 6 21 6"/>
+          <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/>
+          <path d="M10 11v6M14 11v6M9 6V4h6v2"/>
+        </svg>
+      </button>
+
+      <!-- 🌙 Theme toggle -->
+      <button class="hdr-btn" id="hdr-theme" aria-label="Toggle theme" title="Toggle theme">
+        <svg id="theme-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+      </button>
+
+      <!-- ✕ Close -->
+      <button class="hdr-btn" id="hdr-close" aria-label="Close chat" title="Close">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- MESSAGES BODY -->
+  <div class="chat-body" id="chat-body" role="log" aria-live="polite">
+    <div class="chat-fade" aria-hidden="true"></div>
+
+    <!-- Greeting (empty state) -->
+    <div class="chat-greeting" id="chat-greeting">
+      <div class="greeting-orb" aria-hidden="true">✦</div>
+      <h3>Hello, I'm ZEN-G!</h3>
+      <p id="greeting-sub">Your intelligent course assistant.<br/>Ask me anything from the material!</p>
+      <div class="chips" role="list">
+        <button class="chip" onclick="sendChip(this)">✦ What topics are covered?</button>
+        <button class="chip" onclick="sendChip(this)">✦ Summarise key points</button>
+        <button class="chip" onclick="sendChip(this)">✦ Give me a quiz question</button>
+        <button class="chip" onclick="sendChip(this)">✦ Hello!</button>
+      </div>
+    </div>
+
+    <div id="msgs"></div>
+
+    <!-- Typing indicator -->
+    <div class="msg-row bot" id="typing-row" style="display:none" aria-label="ZEN-G is typing">
+      <div class="msg-avatar" aria-hidden="true">✦</div>
+      <div class="typing-bubble" role="status">
+        <span class="typing-dot"></span><span class="typing-dot"></span><span class="typing-dot"></span>
+      </div>
+    </div>
+
+    <div class="spacer" id="scroll-anchor"></div>
+  </div>
+
+  <!-- Scroll to bottom -->
+  <button class="scroll-down-btn" id="scroll-down-btn" aria-label="Scroll to latest" onclick="scrollToBottom()">
+    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </button>
+
+  <!-- INPUT AREA -->
+  <div class="chat-input-area">
+    <div class="input-shell">
+
+      <!-- 🎤 MIC — voice typing -->
+      <button class="input-icon-btn" id="mic-btn" aria-label="Start voice input" title="Click to speak">
+        <svg id="mic-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+          <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+          <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+          <line x1="12" y1="19" x2="12" y2="23"/>
+          <line x1="8"  y1="23" x2="16" y2="23"/>
+        </svg>
+      </button>
+
+      <textarea class="chat-textarea" id="chat-textarea" rows="1"
+        placeholder="Ask your question…" maxlength="2000"
+        aria-label="Type your message"></textarea>
+
+      <!-- ➤ SEND -->
+      <button class="send-btn" id="send-btn" aria-label="Send message" disabled>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Footer: voice status label + char count -->
+    <div class="input-footer">
+      <div class="voice-status" id="voice-status">
+        <span class="voice-dot"></span>
+        <span id="voice-status-text">Listening…</span>
+      </div>
+      <span class="char-count" id="char-count"></span>
+    </div>
+  </div>
+
+  <!-- EXPORT MODAL OVERLAY -->
+  <div class="export-overlay" id="export-overlay" role="dialog" aria-modal="true" aria-label="Export transcript">
+    <div class="export-sheet">
+      <div class="export-title">Download transcript</div>
+      <div class="export-sub" id="export-sub">Choose a format to save your chat</div>
+      <div class="export-success" id="export-success">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="export-success-msg">File downloaded!</span>
+      </div>
+      <div class="export-options">
+        <button class="export-opt" id="export-txt" onclick="exportChat('txt')">
+          <div class="export-opt-icon">📄</div>
+          <div class="export-opt-info">
+            <div class="export-opt-name">Plain text (.txt)</div>
+            <div class="export-opt-desc">Simple, readable — open in any app</div>
+          </div>
+        </button>
+        <button class="export-opt" id="export-pdf" onclick="exportChat('pdf')">
+          <div class="export-opt-icon">📕</div>
+          <div class="export-opt-info">
+            <div class="export-opt-name">PDF document (.pdf)</div>
+            <div class="export-opt-desc">Printable, shareable — opens in any viewer</div>
+          </div>
+        </button>
+      </div>
+      <button class="export-cancel" onclick="closeExport()">Cancel</button>
+    </div>
+  </div>
+
+</div><!-- end .chat-popup -->
+
+
+<!-- ============================================================
+     JAVASCRIPT — All functionality
+============================================================ -->
+<script>
+const knowledgeBase = [
+    {
+        question: "What are the most common risks of social media?",
+        answer: `Social media risks include phishing scams, account hacking, oversharing sensitive information, fake news, and identity theft. These can affect both your personal life and your workplace.
+
+    Lets look at a real-Life example: In 2022, an employee posted a desk selfie that accidentally revealed confidential client documents in the background. The image spread quickly, and the company faced reputational damage.
+
+    So, before posting, check your surroundings and remove anything sensitive from view.
+ `,
+    },
+
+    {
+        question: "What is phishing on social media?",
+        answer: `Phishing happens when attackers send deceptive messages — often with urgent language — to lure you into clicking a link that leads to a fake website. There, they can steal your login credentials or install malware.
+
+    Lets look at a real-Life example: A scammer posed as a recruiter on LinkedIn, sending a “job application” link. It led to a fake login page that stole the user’s password.
+
+    So, avoid clicking links from unknown senders. Always verify directly through the platform.
+ `,
+    },
+
+    {
+        question: "What is quishing?",
+        answer: `Quishing uses malicious QR codes that lead you to fake websites or trigger malware downloads. These codes can appear in public places, emails, or even social media messages.
+
+    Lets look at a real-Life example: In 2023, fake parking payment QR codes were placed on city parking meters. Drivers scanned them and unknowingly entered card details on a scam site.
+
+    So, only scan QR codes from trusted, expected sources.
+ `,
+    },
+
+    {
+        question: "How can scammers use my old accounts?",
+        answer: `Inactive accounts may still display sensitive information like your birthdate, work email, or address. Hackers can scrape this data for fraud or identity theft.
+
+    Lets look at a real-Life example: A person’s abandoned music forum profile revealed their birthdate and employer — scammers used it to apply for a loan in their name.
+
+    So, delete unused accounts or update them to remove personal details.
+ `,
+    },
+
+    {
+        question: "What is a browser-in-the-browser attack?",
+        answer: `This attack creates a convincing fake login pop-up within your browser, tricking you into entering your credentials into a fraudulent site.
+
+    Lets look at a real-Life example: Gamers logging into a “Steam” pop-up lost their accounts because it was a fake overlay.
+
+    So, always check the actual browser address bar, not just the pop-up window.
+ `,
+    },
+
+    {
+        question: "What is a deepfake?",
+        answer: `Deepfakes use AI to create realistic but fake media, making it appear that someone said or did something they never did.
+
+    Lets look at a real-Life example: A deepfake voice of a CEO was used to trick employees into transferring $243,000 to a fraudulent account.
+
+    So, if you receive unexpected instructions in video or audio, confirm through a separate trusted channel.
+ `,
+    },
+
+    {
+        question: "How do scammers clone profiles?",
+        answer: `Scammers copy your profile picture, name, and details to create a fake account, then message your contacts to steal money or data.
+
+    Lets look at a real-Life example: A cloned profile of an HR manager was used to send “job offers” that collected applicants’ bank details.
+
+    So, search for your name on social media regularly to spot clones.
+ `,
+    },
+
+    {
+        question: "What is catfishing?",
+        answer: `Catfishing is when a scammer creates a fake profile, often for romance or financial fraud.
+
+    Lets look at a real-Life example: A scammer posed as a soldier abroad, gaining trust and convincing a victim to send money.
+
+    So, verify profiles with video calls before building trust.
+ `,
+    },
+
+    {
+        question: "What is spear phishing?",
+        answer: `Spear phishing targets specific individuals or organizations using personal info to make scams more convincing.
+
+    Lets look at a real-Life example: An HR manager got an email from “CEO” requesting staff tax forms — it was fake.
+
+    So, double-check any sensitive request via another channel.
+ `,
+    },
+
+    {
+        question: "What is smishing?",
+        answer: `Smishing uses text messages to trick you into clicking malicious links or sharing info.
+
+    Lets look at a real-Life example: Fake delivery texts led victims to enter bank details on scam sites.
+
+    So, don’t click links in unexpected texts.
+ `,
+    },
+
+    {
+        question: "What is vishing?",
+        answer: `Vishing involves scammers calling and pretending to be from trusted organizations to steal info.
+
+    Lets look at a real-Life example: A “bank officer” called asking for OTPs — it was a scammer.
+
+    So, hang up and call back on the official number.
+ `,
+    },
+
+    {
+        question: "What is credential stuffing?",
+        answer: `Hackers use leaked username/password pairs to access your other accounts.
+
+    Lets look at a real-Life example: Reused passwords from a gaming site breach were used to hack email and social media.
+
+    So, use unique passwords for every account.
+ `,
+    },
+
+    {
+        question: "What is account takeover?",
+        answer: `Once inside, they can post as you, message contacts, and lock you out.
+
+    Lets look at a real-Life example: influencer’s hacked Instagram was used to run crypto scams.
+
+    So, enable MFA to prevent takeover even if your password leaks.
+ `,
+    },
+
+    {
+        question: "What is social engineering?",
+        answer: `Attackers manipulate human trust rather than hacking systems.
+
+    Lets look at a real-Life example: Scammer convinced an employee to “urgently” reset the CEO’s password.
+
+    So, always verify urgent requests through official channels.
+ `,
+    },
+
+    {
+        question: "What is clickjacking?",
+        answer: `You think you’re clicking a harmless button, but it triggers a hidden malicious action.
+
+    Lets look at a real-Life example: Clicking a “play video” button secretly liked a scam page.
+
+    So, hover and check links before clicking.
+ `,
+    },
+
+    {
+        question: "What is fake news?",
+        answer: `Fake news can damage reputations, cause panic, or mislead public opinion.
+
+    Lets look at a real-Life example: Fake “CEO resignation” post crashed a company’s stock.
+
+    So, cross-check news with trusted sources.
+ `,
+    },
+
+    {
+        question: "How do scammers use fake charity ads?",
+        answer: `They run ads for fake causes, especially after disasters.
+
+    Lets look at a real-Life example: Fake “earthquake relief fund” on social media took donations and vanished.
+
+    So, donate only via official, verified charity pages.
+ `,
+    },
+
+    {
+        question: "What is profile hijacking?",
+        answer: `Hackers replace your content with theirs, often for scams.
+
+    Lets look at a real-Life example: Business’s Facebook page was hijacked and used to sell counterfeit goods.
+
+    So, limit admin access and use MFA.
+ `,
+    },
+
+    {
+        question: "What is oversharing?",
+        answer: `Posting travel plans, full birthdates, or workplace details helps attackers target you.
+
+    Lets look at a real-Life example: Thieves robbed a home after seeing vacation posts.
+
+    So, delay posting trips until after you return.
+ `,
+    },
+
+    {
+        question: "What are malicious browser extensions?",
+        answer: `Some browser add-ons request excessive permissions, enabling spying or data theft.
+
+    Lets look at a real-Life example: A “coupon finder” extension was secretly logging passwords.
+
+    So, install extensions only from trusted sources.
+ `,
+    },
+
+    {
+        question: "What is baiting?",
+        answer: `Scammers lure victims with free downloads that hide malware.
+
+    Lets look at a real-Life example: “Free eBook” link on social media installed ransomware.
+
+    So, be cautious of unsolicited freebies.
+ `,
+    },
+
+    {
+        question: "What is a giveaway scam?",
+        answer: `Scammers pose as brands offering prizes to collect personal details.
+
+    Lets look at a real-Life example: Fake “Airline free tickets” campaign harvested thousands of emails.
+
+    So, verify contests on the official brand website.
+ `,
+    },
+
+    {
+        question: "What is impersonation fraud?",
+        answer: `Attackers pose as colleagues, celebrities, or officials to gain trust.
+
+    Lets look at a real-Life example: Fake “CFO” requested urgent wire transfer from finance team.
+
+    So, always confirm unusual requests in person or by phone.
+ `,
+    },
+
+    {
+        question: "What is SIM swapping?",
+        answer: `Scammers convince carriers to transfer your number to their SIM.
+
+   Lets look at a real-Life example: Victim’s bank accounts drained after SIM swap bypassed 2FA.
+
+    So, add a SIM lock or carrier PIN.
+ `,
+    },
+
+    {
+        question: "What is ransomware via social media?",
+        answer: `Malware links on social media can install ransomware that encrypts files.
+
+   Lets look at a real-Life example: Clicking a “video link” from a friend led to ransomware infection.
+
+    So, avoid clicking unexpected links, even from friends.
+ `,
+    },
+
+    {
+        question: "What is doxxing?",
+        answer: `Attackers post your address, phone number, or workplace to harass you.
+
+   Lets look at a real-Life example: Journalist’s home address posted after critical article.
+
+    So, limit personal details you share publicly.
+ `,
+    },
+
+    {
+        question: "What is a hoax challenge?",
+        answer: `Fake challenges can cause harm or spread malware.
+
+   Lets look at a real-Life example: “Delete system folder for speed boost” hoax bricked computers.
+
+    So, don’t follow random online “tips” or challenges.
+ `,
+    },
+
+    {
+        question: "What is formjacking?",
+        answer: `Malicious code captures details entered on legitimate forms.
+
+   Lets look at a real-Life example: Fake checkout page on hacked e-commerce site stole card info.
+
+    So, use payment gateways with security certifications.
+ `,
+    },
+
+    {
+        question: "What is a watering hole attack?",
+        answer: `Hackers compromise a site popular with a specific audience.
+
+   Lets look at a real-Life example: Industry blog hacked to deliver malware to readers.
+
+    So, keep browsers and plugins updated.
+ `,
+    },
+
+    {
+        question: "What is image-based malware?",
+        answer: `Images carry hidden malicious code activated on download.
+
+   Lets look at a real-Life example: A “funny meme” file infected hundreds of users.
+
+    So, don’t download images from untrusted sources.
+ `,
+    },
+
+    {
+        question: "What is a fake verification scam?",
+        answer: `They claim you must verify your account or lose it.
+
+   Lets look at a real-Life example: Fake “Instagram support” DM stole login details.
+
+    So, platforms never ask for login via DMs.
+ `,
+    },
+
+    {
+        question: "What is a crypto scam on social media?",
+        answer: `Scammers promise guaranteed returns in cryptocurrency.
+
+   Lets look at a real-Life example: Fake celebrity account promoted “Bitcoin doubling” scam.
+
+    So, avoid investment offers on social media.
+ `,
+    },
+
+    {
+        question: "What is cyberstalking?",
+        answer: `Stalkers use posts and check-ins to track victims.
+
+   Lets look at a real-Life example: Ex-partner used tagged photos to monitor movements.
+
+    So, restrict post visibility to friends.
+ `,
+    },
+
+    {
+        question: "What is platform-specific phishing?",
+        answer: `Each platform has unique scams — fake friend requests, job offers, giveaways.
+
+   Lets look at a real-Life example: Fake LinkedIn recruiter job offer collected personal data.
+
+    So, learn the scams common to your platform.
+ `,
+    },
+
+    {
+        question: "What is influencer impersonation?",
+        answer: `Scammers pose as brands to get content creators to click malicious links.
+
+   Lets look at a real-Life example: Influencer lost her account after clicking a “brand deal” link.
+
+    So, verify brand contacts through official email.
+ `,
+    },
+
+    {
+        question: "What is a fake review scam?",
+        answer: `Competitors or scammers post fake reviews to manipulate perception.
+
+   Lets look at a real-Life example: Fake negative reviews sank a restaurant’s ratings.
+
+    So, report suspicious reviews to the platform.
+ `,
+    },
+
+    {
+        question: "What is social media sniffing?",
+        answer: `Hackers use tools to read your data on unsecured networks.
+
+   Lets look at a real-Life example: Login details stolen at a coffee shop Wi-Fi hotspot.
+
+    So, use a VPN on public Wi-Fi.
+ `,
+    },
+
+    {
+        question: "What is chain letter fraud?",
+        answer: `These spread misinformation, collect data, or deliver malware.
+
+   Lets look at a real-Life example: “Forward this to 10 friends or lose access” hoax spread widely.
+
+    So, don’t forward unverified messages.
+ `,
+    },
+
+    {
+        question: "What is an engagement bait scam?",
+        answer: `They build large followings then switch content to scams.
+
+   Lets look at a real-Life example: Cute pet page turned into crypto scam page overnight.
+
+    So, avoid interacting with clickbait content.
+ `,
+    },
+
+    {
+        question: "What is malicious livestreaming?",
+        answer: `Hackers stream fake “emergency” or “giveaway” events.
+
+   Lets look at a real-Life example: Fake charity livestream collected thousands in donations.
+
+    So, verify event hosts before donating.
+ `,
+    },
+
+    {
+        question: "What is tag-jacking?",
+        answer: `You appear linked to scams you never endorsed.
+
+   Lets look at a real-Life example: User tagged in fake giveaway posts without consent.
+
+    So, review and remove unwanted tags.
+ `,
+    },
+
+    {
+        question: "What is spyware via apps?",
+        answer: `Some social apps carry spyware disguised as features.
+
+   Lets look at a real-Life example: Beauty filter app recorded keystrokes.
+
+    So, install apps from official stores only.
+ `,
+    },
+
+    {
+        question: "What is a fake job scam?",
+        answer: `Scammers post jobs to collect personal or financial data.
+
+   Lets look at a real-Life example: Victim paid for “training” for a non-existent job.
+
+    So, apply only through official company channels.
+ `,
+    },
+
+    {
+        question: "What is fake investment advice?",
+        answer: `Scammers pose as experts to lure victims into bad investments.
+
+   Lets look at a real-Life example: “Insider stock tips” group pumped and dumped shares.
+
+    So, research any investment independently.
+ `,
+    },
+
+    {
+        question: "What is social media identity theft?",
+        answer: `Attackers use stolen personal info to commit crimes.
+
+   Lets look at a real-Life example: Victim’s details used to open fraudulent credit accounts.
+
+    So, monitor your credit reports regularly.
+ `,
+    },
+
+    {
+        question: "What is fake event fraud?",
+        answer: `Scammers create fake event pages to sell tickets.
+
+   Lets look at a real-Life example: Fake concert in Delhi collected thousands in ticket sales.
+
+    So, buy tickets only from official sources.
+ `,
+    },
+
+    {
+        question: "What is “emotional clicking”?",
+        answer: `Scammers craft posts that provoke strong emotions so you act without thinking.
+
+   Lets look at a real-Life example: “Shocking animal cruelty video” led to phishing site.
+
+    So, pause and think before clicking emotionally charged posts.
+ `,
+    },
+
+    {
+        question: "What is an AI-powered scam?",
+        answer: `AI creates realistic fake voices, videos, or texts to deceive.
+
+   Lets look at a real-Life example: CEO voice deepfake requested emergency funds.
+
+    So, verify any unusual requests using a second channel.
+ `,
+    },
+
+    {
+        question: "What is brand hijacking?",
+        answer: `Scammers pretend to be a company to run scams.
+
+   Lets look at a real-Life example: Fake airline account offered “free tickets” for card details.
+
+    So, check for verified account badge before engaging.
+ `,
+    },
+
+    {
+        question: "What is malicious meme sharing?",
+        answer: `Some memes carry malware or spread false narratives.
+
+   Lets look at a real-Life example: Meme about “bank policy change” caused panic.
+
+    So, share memes only from trusted pages.
+ `,
+    },
+
+    {
+        question: "What is a shadow profile?",
+        answer: `Platforms compile data from your friends’ posts and tags even if you never shared it.
+
+   Lets look at a real-Life example: User who never posted had ad targeting based on friends’ uploads.
+
+    So, review and limit what others can tag you in.
+ `,
+    },
+
+    {
+        question: "What is a fake friend request scam?",
+        answer: `Fake accounts send friend requests to access your posts or message you.
+
+   Lets look at a real-Life example: Victim accepted fake friend, who later sent phishing links.
+
+    So, accept requests only from people you know.
+ `,
+    },
+
+    /* Logic for Part 1: Threat Awareness */
+
+    /* Part 2 – Prevention & Protection: Q&A Dataset */
+
+    {
+        question: "How do I protect my social media accounts?",
+        answer: `Combine unique passwords, multi-factor authentication (MFA), and tight privacy controls
+
+   Lets look at a real-Life example: Journalist’s Facebook account was saved from takeover thanks to MFA.
+
+    So, enable MFA on all accounts immediately.
+ `,
+    },
+
+    {
+        question: "How often should I change my passwords?",
+        answer: `Regular updates reduce risk if credentials leak.
+
+   Lets look at a real-Life example: A breach exposed 2-year-old passwords still in use.
+
+    So, use a password manager for easy rotation.
+ `,
+    },
+
+    {
+        question: "How do I spot a phishing message?",
+        answer: `Phishing often uses poor grammar, fake links, or emotional pressure.
+
+   Lets look at a real-Life example: Staff avoided breach after noticing typo in “CEO” email.
+
+    So, hover over links before clicking.
+ `,
+    },
+
+    {
+        question: "How can I check if a link is safe?",
+        answer: `Use link checkers or hover to verify the real address.
+
+   Lets look at a real-Life example: Employee avoided malware by checking shortened link.
+
+    So, use tools like VirusTotal for link scanning.
+ `,
+    },
+
+    {
+        question: "How do I protect my work accounts on social media?",
+        answer: `Keep posts professional, avoid sensitive company details.
+
+   Lets look at a real-Life example: Staff’s LinkedIn post revealed project info to competitors.
+
+    So, review workplace guidelines regularly.
+ `,
+    },
+
+    {
+        question: "What’s the safest way to use public Wi-Fi?",
+        answer: `Public Wi-Fi can be intercepted by hackers.
+
+   Lets look at a real-Life example: Hacker stole credentials at a coffee shop hotspot.
+
+    So, always turn off auto-connect.
+ `,
+    },
+
+    {
+        question: "How do I secure my phone for social media use?",
+        answer: `Keep OS updated, review app permissions, install security apps.
+
+   Lets look at a real-Life example: Malware app stole contacts from unsecured phone.
+
+    So, enable biometric lock and find-my-device.
+ `,
+    },
+
+    {
+        question: "Should I accept friend requests from strangers?",
+        answer: `Strangers can access personal posts and data.
+
+   Lets look at a real-Life example: Fake “friend” sent phishing links to contacts.
+
+    So, accept requests only from known people.enable biometric lock and find-my-device.
+ `,
+    },
+
+    {
+        question: "How do I prevent oversharing?",
+        answer: `Limit location sharing and personal details.
+
+   Lets look at a real-Life example: Thieves robbed home after vacation posts.
+
+    So, post travel photos after returning.
+ `,
+    },
+
+    {
+        question: "What’s the best way to store my passwords?",
+        answer: `Tools encrypt and store complex passwords.
+
+   Lets look at a real-Life example: Marketing exec used manager to rotate 200+ logins.
+
+    So, choose one with zero-knowledge encryption
+ `,
+    },
+
+    {
+        question: "How do I know if my account is hacked?",
+        answer: `Watch for password change emails, strange DMs, or followers.
+
+   Lets look at a real-Life example: Employee spotted suspicious login from overseas.
+
+    So, enable account activity notifications.
+ `,
+    },
+
+    {
+        question: "What should I do if my account is hacked?",
+        answer: `Alert contacts, review settings, report to platform.
+
+   Lets look at a real-Life example: Influencer recovered account by acting quickly.
+
+    So, use platform recovery form immediately.
+ `,
+    },
+
+    {
+        question: "How can I stop fake news spreading?",
+        answer: `Check facts with credible sources.
+
+   Lets look at a real-Life example: Viral fake post hurt a brand’s reputation.
+
+    So, use fact-checking websites before posting.
+ `,
+    },
+
+    {
+        question: "How do I set strong privacy settings?",
+        answer: `Adjust who can view, tag, or message you.
+
+   Lets look at a real-Life example: HR manager hid personal details from public view.
+
+    So, review settings every quarter.
+ `,
+    },
+
+    {
+        question: "What is MFA and why use it?",
+        answer: `MFA prevents access even with stolen password.
+
+   Lets look at a real-Life example: Attacker failed to log in without code.
+
+    So, use authenticator app instead of SMS if possible.
+ `,
+    },
+
+    {
+        question: "How do I report a scam on social media?",
+        answer: `Reports help remove malicious accounts.
+
+   Lets look at a real-Life example: Scam page taken down after mass reports.
+
+    So, save evidence before reporting.
+ `,
+    },
+
+    {
+        question: "How can I avoid malicious QR codes?",
+        answer: `QR codes can lead to phishing sites.
+
+   Lets look at a real-Life example: Fake QR poster redirected to payment scam.
+
+    So, use phone’s built-in scanner for previews.
+ `,
+    },
+
+    {
+        question: "How do I avoid browser-in-the-browser attacks?",
+        answer: `Don’t enter credentials in pop-up windows.
+
+   Lets look at a real-Life example: Staff spotted fake Google login overlay.
+
+    So, Type URL manually if unsure.
+ `,
+    },
+
+    {
+        question: "How do I secure my LinkedIn profile?",
+        answer: `Adjust visibility of connections, work history.
+
+   Lets look at a real-Life example: Competitor scraped employee data for recruitment.
+
+    So, limit public view to essentials
+ `,
+    },
+
+    {
+        question: "How can I protect myself from AI deepfakes?",
+        answer: `AI can create fake voices/videos for scams.
+
+   Lets look at a real-Life example: CEO deepfake requested emergency funds.
+
+    So, confirm via known secure channels.
+ `,
+    },
+
+    {
+        question: "How do I stop location tracking on posts?",
+        answer: `Platforms can reveal exact location.
+
+   Lets look at a real-Life example: Criminals tracked influencer’s real-time location.
+
+    So, share location only for events, not home.
+ `,
+    },
+
+    {
+        question: "How to protect against SIM swapping?",
+        answer: `Prevents attackers from hijacking number.
+
+   Lets look at a real-Life example: Fraudster bypassed 2FA with SIM swap.
+
+    So, contact carrier for security options.
+ `,
+    },
+
+    {
+        question: "Should I use my work email for social media?",
+        answer: `Reduces risk of corporate breach.
+
+   Lets look at a real-Life example: Compromised Instagram led to phishing HR email.
+
+    So, create a unique email for social media.
+ `,
+    },
+
+    {
+        question: "How can I protect company accounts?",
+        answer: `Keep logins secure and permissions minimal.
+
+   Lets look at a real-Life example: Brand page hacked after ex-employee kept admin rights.
+
+    So, remove access when staff leave.
+ `,
+    },
+
+    {
+        question: "How do I teach my team about social media risks?",
+        answer: `Scenario-based learning works best.
+
+   Lets look at a real-Life example: Team avoided phishing scam after training.
+
+    So, hold quarterly refresher sessions.
+ `,
+    },
+
+    {
+        question: "How do I teach my team about social media risks?",
+        answer: `Donate via official sites only.
+
+   Lets look at a real-Life example: Scam “relief fund” disappeared with funds.
+
+    So, cross-check with government charity registry.
+ `,
+    },
+
+    {
+        question: "How do I check if my data was breached?",
+        answer: `Sites like haveibeenpwned.com show compromised accounts.
+
+   Lets look at a real-Life example: Discovered old email password in leak.
+
+    So, change affected passwords immediately.
+ `,
+    },
+
+    {
+        question: "How do I avoid emotional clicking?",
+        answer: `Scammers use fear/curiosity to rush you.
+
+   Lets look at a real-Life example: “Emergency news” link was a phishing site.
+
+    So, step away and verify before clicking.
+ `,
+    },
+
+    {
+        question: "Should I post work achievements online?",
+        answer: `Avoid sharing unreleased info.
+
+   Lets look at a real-Life example: Post revealed new client before launch.
+
+    So, get employer’s approval first.
+ `,
+    },
+
+    {
+        question: "How to prevent chain message scams?",
+        answer: `Chain posts can spread scams quickly.
+
+   Lets look at a real-Life example: “Forward or lose account” hoax spread widely.
+
+    So, check fact-checking sites before forwarding
+ `,
+    },
+
+    {
+        question: "How to handle friend’s hacked account?",
+        answer: `Report to platform and wait for fix.
+
+   Lets look at a real-Life example: Friend’s account sent malware links.
+
+    So, message them via another channel.
+ `,
+    },
+
+    {
+        question: "How can I secure my Instagram account?",
+        answer: `Protects against hijacks and stalkers.
+
+   Lets look at a real-Life example: Influencer kept account secure after breach attempt.
+
+    So, review connected apps often.
+ `,
+    },
+
+    {
+        question: "How to avoid engagement bait scams?",
+        answer: `These pages later post scams.
+
+   Lets look at a real-Life example: Cute pet page became crypto scam.
+
+    So, follow only trusted creators.
+ `,
+    },
+
+    {
+        question: "Should I use the same password for work and personal?",
+        answer: `One breach could compromise both.
+
+   Lets look at a real-Life example: Personal site breach exposed corporate accounts.
+
+    So, use unique passwords everywhere.
+ `,
+    },
+
+    {
+        question: "How can I keep my browser secure?",
+        answer: `Prevents exploits from outdated software.
+
+   Lets look at a real-Life example: Outdated plugin allowed malware install.
+
+    So, enable automatic updates.
+ `,
+    },
+
+    {
+        question: "How to protect from fake event scams?",
+        answer: `Fake events collect payments for non-existent shows.
+
+   Lets look at a real-Life example: Concert ticket scam hit hundreds.
+
+    So, buy from official sellers only.
+ `,
+    },
+
+    {
+        question: "How do I stop strangers tagging me?",
+        answer: `Prevents association with scams.
+
+   Lets look at a real-Life example: User tagged in giveaway scam post.
+
+    So, review tags before they appear.
+ `,
+    },
+
+    {
+        question: "Should I use incognito mode?",
+        answer: `Hides history but not from ISPs or sites.
+
+   Lets look at a real-Life example: User thought incognito hid IP — it didn’t.
+
+    So, use VPN for full privacy.
+ `,
+    },
+
+    {
+        question: "How do I protect from malicious apps?",
+        answer: `Avoid sideloading from unknown sources.
+
+   Lets look at a real-Life example: Spyware app stole credentials
+
+    So, read reviews before installing.
+ `,
+    },
+
+    {
+        question: "How to secure shared devices?",
+        answer: `Prevents others from accessing your accounts.
+
+   Lets look at a real-Life example: User left Facebook open at internet cafe.
+
+    So, use private browsing on shared devices.
+ `,
+    },
+
+    {
+        question: "How to avoid influencer scams?",
+        answer: `Scammers pose as brands to steal logins.
+
+   Lets look at a real-Life example: Influencer lost account to fake collab.
+
+    So, check brand emails via official site.
+ `,
+    },
+
+    {
+        question: "How to lock down Facebook profile?",
+        answer: `Restricts profile to trusted people.
+
+   Lets look at a real-Life example: Prevented stranger from seeing full photo album.
+
+    So, hide friend list from public.
+ `,
+    },
+
+    {
+        question: "How to lock down Facebook profile?",
+        answer: `Restricts profile to trusted people.
+
+   Lets look at a real-Life example: Prevented stranger from seeing full photo album.
+
+    So, hide friend list from public.
+ `,
+    },
+
+    {
+        question: "How to stop workplace social engineering?",
+        answer: `Attackers pose as internal contacts.
+
+   Lets look at a real-Life example: Scammer posed as IT to get login reset.
+
+    So, Never give credentials over phone.
+ `,
+    },
+
+    {
+        question: "Should I connect work devices to public Wi-Fi?",
+        answer: `Risk of man-in-the-middle attacks.
+
+   Lets look at a real-Life example: Laptop hacked on hotel Wi-Fi.
+
+    So, Use corporate VPN if necessary.
+ `,
+    },
+
+    {
+        question: "How to stop fake verification scams?",
+        answer: `Fake “verify now” messages steal data.
+
+   Lets look at a real-Life example: Fake Twitter support stole passwords.
+
+    So, report fake verification DMs.
+ `,
+    },
+
+    {
+        question: "How to manage multiple social media accounts safely?",
+        answer: `Prevents cross-account compromise.
+
+   Lets look at a real-Life example: One breach didn’t affect others thanks to separation.
+
+    So, avoid linking personal and work accounts.
+ `,
+    },
+
+    {
+        question: "Should I share my email publicly on social media?",
+        answer: `Reduces spam and phishing.
+
+   Lets look at a real-Life example: Email scraper targeted public addresses.
+
+    So, use contact forms instead.
+ `,
+    },
+
+    {
+        question: "How to protect against ransomware?",
+        answer: `Back up important files regularly.
+
+   Lets look at a real-Life example: Company restored data from backups after attack.
+
+    So, keep offline backups updated.
+ `,
+    },
+
+    {
+        question: "How to use social media safely for networking?",
+        answer: `Avoid oversharing personal details.
+
+   Lets look at a real-Life example: Recruiter targeted user after personal post.
+
+    So, stick to work-relevant content.
+ `,
+    },
+
+    {
+        question: "What’s the best all-round social media safety tip?",
+        answer: `Most scams rely on quick, emotional reactions.
+
+   Lets look at a real-Life example: User avoided scam by double-checking post.
+
+    So, slow down and verify before acting.
+
+ `,
+    },
+
+    /*  Logic for Part 2: Prevention & Protection =done */
+
+    /* Part 3 – Incident Response: Q&A Dataset */
+
+    {
+        question: "My account got hacked, what should I do first?",
+        answer: `Use account recovery tools, reset password, and enable MFA.
+
+   Lets look at a real-Life example: Journalist regained Twitter after quick reset.
+
+    So, act fast — the sooner you act, the less damage.
+
+ `,
+    },
+
+    {
+        question: "How do I recover a locked social media account?",
+        answer: `Verify identity with ID, email, or phone linked to account.
+
+   Lets look at a real-Life example: Instagram user restored account after verification.
+
+    So, keep recovery email/phone updated.
+
+ `,
+    },
+
+    {
+        question: "Should I tell my contacts if I’ve been hacked?",
+        answer: `Warn friends not to click suspicious links.
+
+   Lets look at a real-Life example: Influencer’s hacked account DMed phishing links.
+
+    So, post a warning update if possible.
+
+ `,
+    },
+
+    {
+        question: "Should I tell my contacts if I’ve been hacked?",
+        answer: `Warn friends not to click suspicious links.
+
+   Lets look at a real-Life example: Influencer’s hacked account DMed phishing links.
+
+    So, post a warning update if possible.
+
+ `,
+    },
+
+    {
+        question: "How do I report a scam message?",
+        answer: `Saves evidence and alerts the platform.
+
+   Lets look at a real-Life example: Fake charity removed after multiple reports.
+
+    So, take screenshots before reporting.
+
+ `,
+    },
+
+    {
+        question: "What if I clicked a phishing link?",
+        answer: `Change passwords for any affected accounts.
+
+   Lets look at a real-Life example: Employee avoided breach by acting fast.
+
+    So, run antivirus scan immediately.
+
+ `,
+    },
+
+    {
+        question: "How do I stop a fake account pretending to be me?",
+        answer: `Provide proof to platform’s support.
+
+   Lets look at a real-Life example: CEO’s fake LinkedIn removed in 24 hrs.
+
+    So, set alerts for your name online.
+
+ `,
+    },
+
+    {
+        question: "What should I do if I shared sensitive work info?",
+        answer: `Early reporting can limit the damage.
+
+   Lets look at a real-Life example: Engineer’s post removed before leak spread.
+
+    So, follow company’s incident response process.
+
+ `,
+    },
+
+    {
+        question: "How do I know if my data was sold online?",
+        answer: `Monitor credit reports and email alerts.
+
+   Lets look at a real-Life example: Personal info found in breach database.
+
+    So, freeze credit if needed.
+
+ `,
+    },
+
+    {
+        question: "Can I get money back from a scam?",
+        answer: `Contact bank or payment platform immediately.
+
+   Lets look at a real-Life example: Victim recovered funds via PayPal claim.
+
+    So, act within 24 hours for higher chance.
+
+ `,
+    },
+
+    {
+        question: "What should I do if I see fake news about me?",
+        answer: `Consider legal action if harmful.
+
+   Lets look at a real-Life example: Business owner sued for fake reviews.
+
+    So, keep evidence before it’s deleted.
+
+ `,
+    },
+
+    {
+        question: "How do I handle ransomware from a link?",
+        answer: `Don’t pay ransom — use backups.
+
+   Lets look at a real-Life example: NGO restored files from offline backup.
+
+    So, regularly back up critical data.
+
+ `,
+    },
+
+    {
+        question: "accidentally posted private info — now what?",
+        answer: `Ask others to remove shares/reposts.
+
+   Lets look at a real-Life example: Employee’s private doc went viral before deletion.
+
+    So, review posts before publishing.
+
+ `,
+    },
+
+    {
+        question: "What should I do after a deepfake attack?",
+        answer: `Seek legal advice if reputational harm occurs.
+
+   Lets look at a real-Life example: CEO targeted with AI-generated voice scam.
+
+    So, use reverse image/video search tools.
+
+ `,
+    },
+
+    {
+        question: "How do I report harassment on social media?",
+        answer: `Platforms can ban abusers after reports.
+
+   Lets look at a real-Life example: User banned after repeated threats.
+
+    So, don’t engage — it escalates abuse.
+
+ `,
+    },
+
+    {
+        question: "Can the police help with online scams?",
+        answer: `File an FIR or online complaint.
+
+   Lets look at a real-Life example: Victim recovered money via cyber cell.
+
+    So, keep chat logs, screenshots, transaction details.
+
+ `,
+    },
+
+    {
+        question: "What if someone posted my personal photos without consent?",
+        answer: `Platforms remove intimate content without consent.
+
+   Lets look at a real-Life example: Model’s stolen photos removed via DMCA.
+
+    So, set strong privacy settings on albums.
+
+ `,
+    },
+
+    {
+        question: "How do I respond to workplace phishing?",
+        answer: `They can block sender and secure systems.
+
+   Lets look at a real-Life example: Office avoided breach due to quick alert.
+
+    So, never delete suspicious emails before reporting.
+
+ `,
+    },
+
+    {
+        question: "suspect my colleague’s account is compromised — what now?",
+        answer: `This prevents internal spread.
+
+   Lets look at a real-Life example: Staff avoided malware from “trusted” contact.
+
+    So, verify in person before sharing sensitive info.
+
+ `,
+    },
+
+    {
+        question: "How to track fake giveaway scams?",
+        answer: `Fake contests vanish after collecting data.
+
+   Lets look at a real-Life example: “Win a phone” scam page disappeared in days.
+
+    So, report and block — don’t engage.
+
+ `,
+    },
+
+    {
+        question: "What should I do after identity theft via social media?",
+        answer: `Freeze accounts and monitor statements.
+
+   Lets look at a real-Life example: Victim stopped loan fraud after reporting.
+
+    So, enable alerts for all financial accounts.
+
+ `,
+    },
+
+    {
+        question: "Can I trace who hacked my account?",
+        answer: `Freeze accounts and monitor statements.
+
+   Lets look at a real-Life example: Platforms and police can investigate.
+
+    So, influencer’s hacker traced via IP logs.
+
+ `,
+    },
+
+    {
+        question: "Can I trace who hacked my account?",
+        answer: `Freeze accounts and monitor statements.
+
+   Lets look at a real-Life example: Platforms and police can investigate.
+
+    So, keep all evidence for investigators.
+
+ `,
+    },
+
+    {
+        question: "How do I prevent repeat attacks?",
+        answer: `Attackers may try again using old data.
+
+   Lets look at a real-Life example: Victim blocked second hack attempt with MFA.
+
+    So, change security questions too.
+
+ `,
+    },
+
+    {
+        question: "My account was banned after hacking — what now?",
+        answer: `Explain hack and show evidence of recovery steps.
+
+   Lets look at a real-Life example: Business page restored after appeal.
+
+    So, keep records of recovery attempts.
+ `,
+    },
+
+    {
+        question: "How do I safely tell customers about a breach?",
+        answer: `Transparency builds trust post-incident.
+
+   Lets look at a real-Life example: Company’s quick disclosure reduced backlash.
+
+    So, include guidance on next steps for users.
+ `,
+    },
+
+    {
+        question: "What’s the role of my company’s security team?",
+        answer: `Also provide guidance and preventive measures.
+
+   Lets look at a real-Life example: Team isolated infected server within 1 hour.
+
+    So, always follow their escalation process.
+ `,
+    },
+
+    {
+        question: "How can I find out what info was stolen?",
+        answer: `Check notifications or contact support.
+    
+   Lets look at a real-Life example: Leak notice listed names and emails.
+
+    So, assume worst until confirmed.
+ `,
+    },
+
+    {
+        question: "What if my account was used for illegal activity?",
+        answer: `Prove it was unauthorized to avoid liability.
+    
+   Lets look at a real-Life example: Victim cleared after proving hack.
+
+    So, keep logs of last activity.
+ `,
+    },
+
+    {
+        question: "Should I change devices after a hack?",
+        answer: `Malware can persist even after account reset.
+    
+   Lets look at a real-Life example: Switched to new phone after spyware attack.
+
+    So, wipe device completely before reuse.
+ `,
+    },
+
+    {
+        question: "How do I recover from reputational damage?",
+        answer: `Transparency can rebuild trust.
+    
+   Lets look at a real-Life example: Influencer regained trust after public apology.
+
+    So, monitor and counter false narratives.
+ `,
+    },
+
+    {
+        question: "How to secure financial accounts after social media breach?",
+        answer: `Hackers may try linked accounts.
+    
+   Lets look at a real-Life example: Bank blocked fraud after alert.
+
+    So, unlink cards from social media where possible.
+ `,
+    },
+
+    {
+        question: "How to secure financial accounts after social media breach?",
+        answer: `Hackers may try linked accounts.
+    
+   Lets look at a real-Life example: Bank blocked fraud after alert.
+
+    So, unlink cards from social media where possible.
+ `,
+    },
+
+    /*  Logic for Part 3: Incident Response */
+
+    /* Part 4 – Verification & Detection Skills: Q&A Dataset */
+
+    {
+        question: "How can I tell if a profile is fake?",
+        answer: `Fake profiles often have generic names, stolen or AI-generated pictures, no personal posts, and very few friends/followers.
+    
+   Lets look at a real-Life example: Scammers created a fake “HR Manager” LinkedIn profile using a stock photo to target job seekers.
+
+    So, reverse image search the profile photo to check if it appears elsewhere.
+ `,
+    },
+
+    {
+        question: "How do I verify a suspicious message?",
+        answer: `Don’t trust unexpected DMs or emails without confirmation.
+    
+   Lets look at a real-Life example: An employee avoided a scam by calling their “manager” directly instead of replying to a suspicious WhatsApp.
+
+    So, always double-check before sharing info.
+ `,
+    },
+
+    {
+        question: "How do I know if a link is safe?",
+        answer: `Look for misspellings, extra characters, or unusual domain endings.
+    
+   Lets look at a real-Life example: A “bank” link had “.net” instead of “.com,” revealing it was fake.
+
+    So, use a trusted URL scanner before clicking.
+ `,
+    },
+
+    {
+        question: "Can I tell if a QR code is malicious?",
+        answer: `Malicious QR codes can redirect to fake sites or malware.
+    
+   Lets look at a real-Life example: Event poster QR led attendees to a phishing site.
+
+    So, use your phone’s built-in preview option before opening.
+ `,
+    },
+
+    {
+        question: "How can I spot fake news?",
+        answer: `Fake news often uses emotional headlines, poor grammar, and unverified claims.
+    
+   Lets look at a real-Life example: Viral “celebrity death” posts turned out false.
+
+    So, search reputable news outlets before sharing.
+ `,
+    },
+
+    {
+        question: "How do I spot a deepfake video?",
+        answer: `Deepfakes often have subtle inconsistencies AI struggles with.
+    
+   Lets look at a real-Life example: A deepfake politician speech had mismatched lip movement.
+
+    So, use AI deepfake detection tools for confirmation.
+ `,
+    },
+
+    {
+        question: "How can I check if an image is real?",
+        answer: `This reveals if the photo appears elsewhere or in a different context.
+    
+   Lets look at a real-Life example: A “disaster” image was actually from a movie scene.
+
+    So, use TinEye or Google Images to confirm.
+ `,
+    },
+
+    {
+        question: "How do I confirm if a charity ad is real?",
+        answer: `Real charities have verifiable websites and official numbers.
+    
+   Lets look at a real-Life example: Fake flood relief ad scammed thousands.
+
+    So, donate only through official channels.
+ `,
+    },
+
+    {
+        question: "How do I verify a job offer on social media?",
+        answer: `Fake recruiters use lookalike email addresses.
+    
+   Lets look at a real-Life example: A “Tech Corp” offer came from techcorpjobs@gmail.com, not official domain.
+
+    So, legit offers come from company-owned domains.
+ `,
+    },
+
+    {
+        question: "How can I tell if a contest is legitimate?",
+        answer: `Fake contests vanish after collecting data.
+    
+   Lets look at a real-Life example: “Win a free iPhone” page disappeared in 2 days.
+
+    So, check page creation date before entering.
+ `,
+    },
+
+    {
+        question: "How do I check if a video is edited?",
+        answer: `Edited clips often distort original meaning.
+    
+   Lets look at a real-Life example: Edited clips often distort original meaning.
+
+    So, watch full source video before reacting.
+ `,
+    },
+
+    {
+        question: "How to verify if a page is official?",
+        answer: `Official pages link to their main website.
+    
+   Lets look at a real-Life example: Fake “Brand” page had no website link.
+
+    So, Click profile info to verify authenticity.
+ `,
+    },
+
+    {
+        question: "Can I trust testimonials on social media?",
+        answer: `Fake reviews use generic praise and no details.
+    
+   Lets look at a real-Life example: Restaurant boosted rating with bought reviews.
+
+    So, check reviewer history for credibility.
+ `,
+    },
+
+    {
+        question: "How do I detect a cloned website?",
+        answer: `Fake sites mimic design but have different URLs.
+    
+   Lets look at a real-Life example: Banking scam used cloned site to steal logins.
+
+    So, type URL directly instead of clicking links.
+ `,
+    },
+
+    {
+        question: "What are signs of a compromised account?",
+        answer: `Hackers post scams or change profile details.
+    
+   Lets look at a real-Life example: Friend’s account sent spam messages.
+
+    So, log out of all devices and change password.
+ `,
+    },
+
+    {
+        question: "How do I check if a social media ad is safe?",
+        answer: `Scammers buy ads for fake products.
+    
+   Lets look at a real-Life example: Fake gadget ad took payments but never delivered.
+
+    So, read comments for red flags before engaging.
+ `,
+    },
+
+    {
+        question: "Can I tell if a friend request is fake?",
+        answer: `Fake profiles build trust using shared contacts.
+    
+   Lets look at a real-Life example: Impersonator added users to send scams.
+
+    So, only accept from people you know personally.
+ `,
+    },
+
+    {
+        question: "How do I verify if breaking news is real?",
+        answer: `Fake “city lockdown” post caused panic.
+    
+   Lets look at a real-Life example: Wait for official announcements before acting.
+ `,
+    },
+
+    {
+        question: "How can I check if a message is AI-generated?",
+        answer: `AI scammers use flawless but unnatural phrasing.
+    
+   Lets look at a real-Life example: Scam DMs sounded “too perfect” to be real.
+
+    So, ask specific questions to test authenticity.
+ `,
+    },
+
+    {
+        question: "How do I detect suspicious hashtags?",
+        answer: `Scam trends lure clicks to phishing pages.
+    
+   Lets look at a real-Life example: “#FreeGift” led to fake promo links.
+
+    So, stick to trusted, relevant hashtags.
+ `,
+    },
+
+    {
+        question: "How can I tell if a profile picture is AI-generated?",
+        answer: `AI often struggles with hands, eyes, and ears.
+    
+   Lets look at a real-Life example: Fake influencer’s face had mismatched earrings.
+
+    So, use AI image detection tools.
+ `,
+    },
+
+    {
+        question: "How do I spot manipulation in social media polls?",
+        answer: `Scammers use polls to gather personal info.
+    
+   Lets look at a real-Life example: Poll asking birth year was a data-mining scam.
+
+    So, avoid polls asking sensitive details.
+ `,
+    },
+
+    {
+        question: "Can fake accounts be part of larger scams?",
+        answer: `Bot accounts push fake links.
+    
+   Lets look at a real-Life example: Election misinformation spread by bot farm.
+
+    So, report suspicious accounts to platform.
+ `,
+    },
+
+    {
+        question: "How do I check if an influencer is genuine?",
+        answer: `Fake influencers buy followers.
+    
+   Lets look at a real-Life example: “Travel blogger” had 50k followers but 10 likes per post.
+
+    So, use third-party analytics to verify.
+ `,
+    },
+
+    {
+        question: "Can scammers use verified accounts?",
+        answer: `Hackers use verified trust to spread scams.
+    
+   Lets look at a real-Life example: Hacked verified account sold fake crypto.
+
+    So, don’t trust blue tick blindly — check content.
+ `,
+    },
+
+    /* Logic for Part 4: Verification & Detection Skills */
+
+    /*  Part 5 – Platform Specific: Q&A Dataset */
+
+    {
+        question: "How can I secure my Facebook account?",
+        answer: `Use Facebook’s Security Checkup to log out of unused devices, enable two-factor authentication, and set profile privacy to “Friends.”
+    
+   Lets look at a real-Life example: In 2021, a phishing link sent via Messenger compromised 50 accounts in one company.
+
+    So, go to Settings > Security and Login > Two-Factor Authentication.
+ `,
+    },
+
+    {
+        question: "What should I avoid posting on Facebook?",
+        answer: `Facebook posts can be scraped for identity theft or corporate espionage.
+    
+   Lets look at a real-Life example: A vacation post revealed an empty home — it was burgled.
+
+    So, share travel photos after you return.
+ `,
+    },
+
+    {
+        question: "How can I spot fake friend requests on Facebook?",
+        answer: `Scammers clone profiles to phish contacts.
+    
+   Lets look at a real-Life example: Cloned CEO account sent fraudulent “urgent” messages.
+
+    So, verify by messaging the person on another platform.
+ `,
+    },
+
+    {
+        question: "How do I secure my LinkedIn profile?",
+        answer: `Adjust “Who Can See Your Connections” to “Only You” to avoid competitor intelligence gathering.
+    
+   Lets look at a real-Life example: Recruiter scam used public connections to target victims.
+
+    So, Settings & Privacy > Visibility > Connections.
+ `,
+    },
+
+    {
+        question: "What’s risky to post on LinkedIn?",
+        answer: `Oversharing can lead to industrial espionage.
+    
+   Lets look at a real-Life example: A project update revealed a confidential partner deal.
+
+    So, share generic achievements without sensitive details.
+ `,
+    },
+
+    {
+        question: "How do I detect fake recruiters on LinkedIn?",
+        answer: `Real recruiters use company email addresses.
+    
+   Lets look at a real-Life example: A fake recruiter tricked users into uploading ID scans.
+
+    So, always confirm through the company’s HR department.
+ `,
+    },
+
+    {
+        question: "How can I protect my Instagram account?",
+        answer: `Limit story sharing to Close Friends to avoid stalkers.
+    
+   Lets look at a real-Life example: Influencer’s public stories revealed daily routines to a stalker.
+
+    So, Settings > Privacy > Account Privacy.
+ `,
+    },
+
+    {
+        question: "What is risky to share on Instagram stories?",
+        answer: `Criminals can track your movements.
+    
+   Lets look at a real-Life example: A live gym story led to a targeted theft.
+
+    So, post location tags after leaving.
+ `,
+    },
+
+    {
+        question: "How to spot fake giveaways on Instagram?",
+        answer: `Fake giveaways collect data or money.
+    
+   Lets look at a real-Life example: “Win a MacBook” account was only 3 days old.
+
+    So, enter contests from verified accounts only.
+ `,
+    },
+
+    {
+        question: "How to make my Twitter/X account more secure?",
+        answer: `Protect tweets to limit audience.
+    
+   Lets look at a real-Life example: Journalist’s public tweets led to harassment.
+
+    So, Settings > Privacy and Safety > Protect your Tweets.
+ `,
+    },
+
+    {
+        question: "How to avoid scams on Twitter/X?",
+        answer: `Scam links often ride trending hashtags.
+    
+   Lets look at a real-Life example: “Breaking news” link was a phishing page.
+
+    So, use trusted news sources.
+ `,
+    },
+
+    {
+        question: "How to secure my TikTok account?",
+        answer: `TikTok sessions remain active on multiple devices.
+    
+   Lets look at a real-Life example: Hacked account posted scam crypto videos.
+
+    So, Settings > Security > Manage Devices.
+ `,
+    },
+
+    {
+        question: "What’s risky to post on TikTok?",
+        answer: `A TikTok dance revealed an unreleased product on a desk.
+    
+   Lets look at a real-Life example: Record in a neutral space.
+
+ `,
+    },
+
+    {
+        question: "How to spot fake TikTok challenges?",
+        answer: `Dangerous challenges can harm users physically or legally.
+    
+   Lets look at a real-Life example: Fake “prank” challenge led to arrests.
+
+    So, only join trends from verified accounts.
+ `,
+    },
+
+    {
+        question: "Can scammers target me through platform ads?",
+        answer: `Scam ads appear on all platforms.
+    
+   Lets look at a real-Life example: Instagram ad led to fake store selling knockoffs.
+
+    So, read comments before clicking.
+ `,
+    },
+
+    {
+        question: "Should I use the same security steps for all platforms?",
+        answer: `MFA and privacy controls are universal; platform-specific features vary.
+    
+   Lets look at a real-Life example: A single weak platform can be an entry point for others.
+
+    So, review each platform’s security center quarterly.
+ `,
+    },
+
+    {
+        question: "How can I spot if a verified account is hacked?",
+        answer: `Even verified accounts can be compromised.
+    
+   Lets look at a real-Life example: A verified celebrity promoted crypto scams.
+
+    So, report and avoid clicking any links.
+ `,
+    },
+
+    {
+        question: "How do I secure work-related accounts?",
+        answer: `Avoid sharing passwords across team members.
+    
+   Lets look at a real-Life example: Shared password led to unauthorized posts.
+
+    So, use role-based access tools.
+ `,
+    },
+
+    {
+        question: "Are there special risks for business pages?",
+        answer: `Business pages are prime targets for takeover.
+    
+   Lets look at a real-Life example: Hacked restaurant page posted offensive content.
+
+    So, assign multiple trusted admins.
+ `,
+    },
+
+    {
+        question: "How do I find each platform’s latest security updates?",
+        answer: `Platforms post updates on new tools and risks.
+    
+   Lets look at a real-Life example: Facebook’s 2023 MFA rollout improved account safety.
+
+    So, Bookmark the official security blog.
+ `,
+    },
+
+    {
+        question: "What is the role of my company's security team in social media incidents?",
+        answer: `Your security team can isolate threats and provide recovery guidance.
+    
+   Lets look at a real-Life example: IT team contained ransomware within 1 hour of detection.
+
+    So, always report suspicious activity to your security team immediately.
+ `,
+    },
+
+    {
+        question: "How do I apply security best practices to team social media accounts?",
+        answer: `Best practices reduce risk across all accounts.
+    
+   Lets look at a real-Life example: Company applied role-based access and prevented unauthorized posts.
+
+    So, use different credentials for each admin level.
+ `,
+    },
+
+    {
+        question: "What are common security vulnerabilities in social media apps?",
+        answer: `Some apps have outdated security protocols or poor data encryption.
+    
+   Lets look at a real-Life example: Old app version had unpatched login vulnerability.
+
+    So, keep apps updated to the latest version.
+ `,
+    },
+
+    {
+        question: "How does end-to-end encryption improve security on social media?",
+        answer: `Encryption means only sender and recipient can read messages.
+    
+   Lets look at a real-Life example: Hackers intercepted unencrypted messages but got only gibberish.
+
+    So, enable encrypted messaging where available.
+ `,
+    },
+
+    {
+        question: "What security risks come with third-party social media apps?",
+        answer: `Third-party apps often request excessive permissions.
+    
+   Lets look at a real-Life example: Photo editor app accessed contacts and location data.
+
+    So, review app permissions before granting access.
+ `,
+    },
+
+    {
+        question: "How can I audit my social media security settings?",
+        answer: `Regular audits catch misconfigured settings early.
+    
+   Lets look at a real-Life example: User found profile was publicly visible due to privacy setting glitch.
+
+    So, check privacy settings every 3 months.
+ `,
+    },
+
+    {
+        question: "What is the importance of security awareness training?",
+        answer: `Training reduces human error — the biggest attack vector.
+    
+   Lets look at a real-Life example: Phishing campaign failed because staff recognized the tactics from training.
+
+    So, attend annual security awareness courses.
+ `,
+    },
+
+    {
+        question: "How can I balance security with user convenience?",
+        answer: `Good security doesn't have to be inconvenient.
+    
+   Lets look at a real-Life example: Biometric login provides security without remembering complex passwords.
+
+    So, use MFA methods that fit your workflow.
+ `,
+    },
+
+    {
+        question: "What security certifications should companies have for social media management?",
+        answer: `Certifications ensure teams follow security standards.
+    
+   Lets look at a real-Life example: ISO 27001 certified firm prevented breach through proper protocols.
+
+    So, ask about security certifications when hiring agencies.
+ `,
+    },
+
+    {
+        question: "What topics are covered?",
+        answer: `This course covers 5 main modules:
+
+1. **Threat Awareness** — Common social media risks (phishing, deepfakes, scams, etc.)
+2. **Prevention & Protection** — How to secure accounts, set privacy controls, spot fake content
+3. **Incident Response** — What to do if hacked, how to recover, reporting steps
+4. **Verification & Detection** — Spotting fake profiles, deepfakes, fake news
+5. **Platform Specific** — Security best practices for Facebook, LinkedIn, Instagram, TikTok, Twitter/X
+
+Each module includes real-life examples and practical steps you can implement immediately.
+ `,
+    },
+
+    {
+        question: "Summarise key points",
+        answer: `Here are the essential takeaways:
+
+✓ **Prevention First**
+- Use unique, strong passwords with MFA enabled
+- Check privacy settings every 3 months
+- Don't accept friend requests from strangers
+
+✓ **Recognize Threats**
+- Phishing often uses poor grammar or urgent language
+- Deepfakes have subtle inconsistencies (mismatched lips, unnatural eyes)
+- Fake profiles lack personal posts and have few interactions
+
+✓ **If You Get Hacked**
+- Change passwords immediately
+- Enable MFA
+- Warn your contacts
+- Report to platform support
+
+✓ **Share Safely**
+- Don't post location in real-time
+- Delay vacation photos until after returning
+- Avoid oversharing personal details
+
+✓ **Verify Before Acting**
+- Check sender via another channel
+- Use reverse image search for photos
+- Cross-check news with trusted sources
+
+Remember: Most attacks succeed because of human error. Stay alert and verify before clicking!
+ `,
+    },
+    {
+        question: "Hello!",
+        answer: `Hey there! 👋 Welcome to the Social Media Security course powered by ZEN-G AI!
+
+I'm here to help you understand how to protect yourself online. You can:
+
+✓ Ask about specific threats (phishing, deepfakes, scams)
+✓ Get tips for securing your accounts
+✓ Learn what to do if you've been hacked
+✓ Take quizzes to test your knowledge
+✓ Ask about any platform (Facebook, LinkedIn, Instagram, TikTok, Twitter)
+
+Just type your question or try one of these:
+• "What topics are covered?"
+• "How do I protect my Instagram?"
+• "What is phishing?"
+• "How do I spot a fake profile?"
+
+What would you like to learn? 🚀
+ `,
+    },
+];
+
+const greetings = {
+    hiii: "Hi! I'm Gen-Z, your AI powered assistant. Ask about this course only.",
+    hii: "Hi! I'm Gen-Z, your AI powered assistant. Ask about this course only.",
+    hi: "Hi! I'm Gen-Z, your AI powered assistant. Ask about this course only.",
+    hello: "Hello there! 😊 How can I help you today?",
+    hey: "Hey! 👋 Gen-Z here. What can I do for you?",
+    "good morning": "Good morning! ☀️ Ready to help anytime.",
+    "good afternoon": "Good afternoon! Hope you're having a great day!",
+    "good evening": "Good evening! 🌙 What would you like to know?",
+    "how are you": "I'm doing great! How about you?",
+    "what's up": "Just here to assist you! What can I do for you today?",
+    "thank you": "You're very welcome! 😊",
+    thanks: "Happy to help anytime!",
+    ok: "Alright! Let me know if anything else comes up.",
+    good: "Glad to hear that! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    great: "Awesome! Ready to dive into the course material?",
+    fine: "That's great! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    "i am fine": "That's great! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    "i'm fine": "That's great! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    "i am fine thank you": "You're welcome! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    "i'm fine thank you": "You're welcome! Let's start asking questions about the course or if you have a query related to the topic, feel free to ask.",
+    "i am good": "Glad to hear that! What would you like to learn about the course?",
+    "i'm good": "Glad to hear that! What would you like to learn about the course?",
+    "i am good thank you": "You're welcome! What would you like to learn about the course?",
+    "i'm good thank you": "You're welcome! What would you like to learn about the course?",
+    "i am great": "Awesome! Ready to dive into the course material?",
+    "i'm great": "Awesome! Ready to dive into the course material?",
+    "i am great thank you": "You're welcome! Ready to dive into the course material?",
+    "i'm great thank you": "You're welcome! Ready to dive into the course material?",
+    "not good": "I'm sorry to hear that. Is there anything I can help with regarding the course?",
+    "not great": "I'm sorry to hear that. Is there anything I can help with regarding the course?",
+    "bad": "I'm sorry to hear that. Is there anything I can help with regarding the course?",
+    "okay": "Alright! What can I assist you with today?",
+    "alright": "Alright! What can I assist you with today?",
+    "sure": "Great! What would you like to know?",
+    "yes": "Great! What would you like to know?",
+    "no": "Okay, let me know if you need anything.",
+    "maybe": "Sure, take your time. I'm here when you're ready.",
+    "bye": "Goodbye! 👋 Come back if you need help.",
+    "see you": "See you soon! Take care!",
+    welcome: "Thank you! 😊 Always here for you.",
+    "how are you doing": "I'm doing great, thank you! How about yourself?",
+    awesome: "Yay! 🎉 That makes me happy too.",
+    cool: "Cool indeed! 😎",
+    great: "That's great to hear! Let me know what you'd like to know.",
+    "who are you": "I'm Gen-Z, your friendly AI assistant here to help!",
+    "what can you do":
+        "I can answer your questions, assist with info, and guide you. Just ask!",
+    "are you real": "I'm real in the digital world! 🤖",
+    "can you help me": "Of course! What do you need help with?",
+    "i need help": "I'm here for that! Tell me what you need.",
+    "nice to meet you": "Nice to meet you too! 😊",
+    "how old are you": "I don’t age like humans — I just keep learning!",
+    "what is your name": "I’m Gen-Z — your AI powered assistant.",
+    "what does Gen-Z mean": "I'm here to support you!",
+    "tell me a joke":
+        "Why don’t robots panic? Because they have nerves of steel! 😄",
+    "do you like humans": "Absolutely! I’m here to make life easier for you.",
+    "i'm bored": "Want to learn something interesting or fun? Just say the word!",
+    "i'm tired":
+        "Maybe a quick break will help. Or ask me something to distract you!",
+    "you are smart": "Thank you! I try my best. 😊",
+    "you're helpful": "I'm glad I can help!",
+    "do you sleep": "Nope, I'm always awake and ready to assist!",
+    "are you a robot": "Sort of! I'm an AI assistant designed to help you out.",
+    "tell me something":
+        "Did you know? Honey never spoils. Archaeologists found edible honey in ancient tombs!",
+    "i like you": "That means a lot! I like chatting with you too. 😊",
+    "how do you work":
+        "I use artificial intelligence to understand and respond to your questions!",
+    "what is ai": "AI stands for Artificial Intelligence — like me!",
+    "can i ask you something": "Of course! That’s what I’m here for.",
+    "are you listening": "Yes, I’m all ears (virtually speaking)!",
+    "are you human":
+        "Nope, I’m AI — but I’m designed to be helpful and friendly like one!",
+    "will you help me": "Absolutely! Just ask away.",
+    "hello Gen-Z": "Hi there! 👋 Gen-Z at your service.",
+    "hi Gen-Z": "Hey! How can I assist you today?",
+    yo: "Yo! 😎 What’s up?",
+    sup: "Not much, just waiting to help you!",
+    "who made you":
+        "I was created by smart developers using AI technology to help users like you!",
+    "tell me more": "Sure! What topic are you curious about?",
+    "can we talk": "Yes! I'm here for a chat or to answer your questions.",
+    sentra: "Yes? How can I help you?",
+    "you there": "Always! What would you like to know?",
+    "still there": "Yep, I’m right here!",
+    "good night": "Good night! 🌙 Rest well and see you soon.",
+    "good to see you": "Good to see you too! 😊 How can I assist?",
+    "long time no see": "It’s been a while! Glad you’re back 👋",
+    "how is your day": "My day’s great when I get to help you!",
+    "what are you doing": "Just standing by to help you 🤖",
+    "are you busy": "Not at all! I’m here for you.",
+    "are you free": "Always free to assist you!",
+    "can you chat": "Of course! Let’s chat 😊",
+    "talk with me": "Sure! I’m listening 👂",
+    help: "I’m here to help! What do you need?",
+    "thank you very much": "You’re welcome! 😄",
+    "many thanks": "Happy to help anytime 🙌",
+    "well done": "Thank you! I appreciate that 😊",
+    "nice job": "Glad you liked it! 👍",
+    "you are amazing": "You’re amazing too! 🌟",
+    "you are awesome": "That’s so kind of you! 😄",
+    "love this": "I’m glad you liked it! 😊",
+    "missed you": "I’m here now! Let’s continue 👋",
+    "can you explain this": "Sure! Tell me what you’d like explained.",
+    "guide me": "I’ll guide you step by step 👍",
+    "teach me something": "Alright! What would you like to learn?",
+    "tell me a fun fact": "Bananas are berries, but strawberries aren’t! 🍌",
+    "tell me something fun": "Fun fact: Sharks existed before trees 🦈",
+    "make me happy": "You matter and you’re doing great 😊✨",
+    "cheer me up": "Hey! You’ve got this 💪😄",
+    "you are funny": "Glad I could make you smile 😄",
+    "are you smart": "I try my best to be helpful 😊",
+    "are you available": "Yes! I’m available right now.",
+    "let us talk": "Sure! I’m ready 💬",
+    "are you awake": "Always awake and alert 😄",
+    "hello there": "Hello! 👋 How can I help you today?",
+    "hey there": "Hey there! 😊 What’s up?",
+    "good afternoon Gen-z": "Good afternoon! How can I assist you?",
+    "good evening Gen-Z": "Good evening! 🌙 What’s on your mind?",
+    status: "All systems running smoothly ⚡",
+    "ping Gen-Z": "Pong! 🏓 Gen-Z is here.",
+    test: "Test successful ✅ I’m responding!",
+    checking: "I’m here and ready 👍",
+    "how was your day": "It’s been good! Even better now that you’re here 😊",
+    "i had a bad day": "I’m sorry to hear that 😔 Want to talk about it?",
+    "i feel sad": "I’m here with you 💙 You’re not alone.",
+    "i feel happy": "That’s wonderful! 😊 What made you happy?",
+    "i am stressed": "Take a deep breath 🌿 I’m here to help.",
+    "i am confused": "That’s okay — let’s figure it out together 👍",
+    "i feel lonely": "I’m right here with you 🤍",
+    "i am excited": "That’s awesome! 😄 Tell me more!",
+    "i am angry": "I get it. Want to vent a little?",
+    "i am nervous": "It’s normal to feel that way. You’ve got this 💪",
+    "i am scared": "I’m here. You’re safe to talk to me.",
+    "i am proud of you": "That means a lot to me 😊 Thank you!",
+    "i trust you": "I appreciate that 🤝 I’ll do my best to help.",
+    "i feel better now": "I’m really glad to hear that 😊",
+    "you understand me": "I try my best to 💙",
+    "you make me smile": "That makes me happy too 😄",
+    "you are kind": "Thank you! That’s very sweet of you 😊",
+    "you are nice": "I’m glad you feel that way!",
+    "you care": "I do care about helping you 🤍",
+    "stay with me": "I’m here — no rush, no worries.",
+    "don’t go": "I’m not going anywhere 😊",
+    "are you okay": "I’m doing well, thanks for asking! How about you?",
+    "do you understand me": "Yes, I understand what you’re saying 👍",
+    "can you listen": "I’m listening carefully 👂",
+    "can i share something": "Of course. You can tell me anything.",
+    "this is hard": "I know it can be tough 😔 Let’s take it step by step.",
+    "this is easy": "Nice! You’re doing great 👍",
+    "i need motivation": "You’re stronger than you think 💪 Keep going!",
+    "encourage me": "You’ve come this far — don’t stop now 🌟",
+    "say something nice": "You matter, and you’re doing your best 💙",
+    "talk nicely": "I’ll always be kind and respectful 😊",
+    "be honest": "I’ll give you an honest and helpful answer 👍",
+    "be real": "I’ll keep it real with you 😄",
+    "just chatting": "That’s perfectly fine! I enjoy chatting too 😊",
+    "i need company": "I’m here to keep you company 🤍",
+    "i am thinking": "Take your time — I’m here.",
+    "wait a moment": "No problem! I’ll be right here ⏳",
+    "okay thanks": "Anytime! 😊",
+    "that helped": "I’m really glad I could help 💫",
+    "you helped me": "That makes my day 😊",
+    "feels good": "I’m happy to hear that 😄",
+    "i feel calm": "That’s great 🌿 Stay relaxed.",
+    "good vibes": "Sending positive vibes your way ✨",
+    "everything will be fine": "Yes, it will. One step at a time 🤍",
+    "start": "Great! Let's begin. What would you like to learn about?",
+    "begin": "Awesome! Ready to start exploring the course?",
+    "ready": "Perfect! What topic interests you most?",
+    "let's go": "Let's do it! 🚀 What's your first question about the course?",
+    "get started": "Excellent! Where would you like to start?",
+    "what next": "What would you like to explore next? 🤔",
+    "next topic": "Sure! What's the next topic you'd like to cover?",
+    "more info": "Of course! What specific information do you need?",
+    "explain": "Sure! What would you like me to explain?",
+    "question": "Sure! I'm ready for your question about the course.",
+    "i have a question": "Great! I'm all ears! What's your question?",
+    "curious": "That's wonderful! What are you curious about?",
+    "interested": "Awesome! Let me help you learn more about it!",
+    "confused about": "Don't worry! I'll help clarify. What's confusing?",
+    "don't understand": "No problem! Let me explain better. What's unclear?",
+    "need help with": "I'm here to help! Tell me what you need.",
+    "struggling": "You've got this! What's giving you trouble?",
+    "difficult": "Let's break it down together. What's difficult?",
+    "perfect": "Wonderful! You're doing amazing! 🌟",
+    "excellent": "Fantastic! That's excellent progress! 👏",
+    "brilliant": "You're absolutely brilliant! Keep it up! 🎯",
+    "fantastic": "Fantastic! I love your enthusiasm! 🎉",
+    "incredible": "That's incredible! You're really engaging well! 💡",
+    "amazing stuff": "The course material is amazing, right? What else interests you?",
+    "very helpful": "I'm so glad! Your satisfaction means everything! 🙏",
+    "so helpful": "Happy to be helpful! Any more questions?",
+    "really helpful": "That's wonderful! Keep learning, you're doing great!",
+    "very useful": "I'm thrilled it's useful! Keep going! 📚",
+    "useful information": "Great! Ready for more useful content? What topic next?",
+    "learned a lot": "That's fantastic! You're making great progress! 🚀",
+    "learning": "That's the spirit! Keep learning! 📖",
+    "studying": "Great dedication! What part of the course are you studying?",
+    "practicing": "Excellent! Practice makes perfect! Keep it up! 💪",
+    "improving": "You're definitely improving! I can see the progress! 📈",
+    "progress": "Awesome! You're making real progress here! 🎯",
+    "continue": "Let's continue! What would you like to dive into next?",
+    "proceed": "Absolutely! Let's proceed with the next topic!",
+    "move on": "Great! Let's move on to the next section!",
+    "skip": "No problem! What would you like to discuss instead?",
+    "go back": "Sure! What would you like to revisit?",
+    "previous": "Of course! Let me help you with the previous topic.",
+    "again": "Sure! Let me explain that one more time! 📝",
+    "once more": "Absolutely! Let's go through it once more!",
+    "repeat": "No problem! Repetition helps learning! 🔄",
+    "remember": "Let me remind you about that topic! 💭",
+    "forget": "No worries! Let me refresh your memory! 🧠",
+    "recall": "Let me help you recall that information! 📚",
+    "remind me": "Of course! What would you like me to remind you about?",
+    "what was": "Let me recall that for you! What specifically?",
+    "i forgot": "No problem! Let's recap what you need! 🔙",
+    "remind": "Sure! What would you like me to remind you about?",
+    "short break": "Great idea! Take your time. I'll be here! ☕",
+    "break time": "Absolutely! Rest well! I'm always here when you're back! 😊",
+    "later": "No problem! We can continue whenever you're ready! 👋",
+    "back soon": "Looking forward to chatting again! See you soon! 🙌",
+    "comeback": "Welcome back! Ready to continue learning?",
+    "i'm back": "Welcome back! Let's jump right back in! 🚀",
+    "hi again": "Hey there! Great to see you again! 😊",
+    "hello again": "Hello again! What can I help you with today?",
+    "new question": "Perfect! I'm ready for your new question! 🎯",
+    "another question": "Absolutely! Fire away with another question!",
+    "one more": "Sure! I'm happy to help with one more! 📝",
+    "last question": "Go ahead! What's your last question?",
+    "final question": "Of course! What's your final question?",
+    "quick question": "Sure! What's your quick question? ⚡",
+    "doubt": "I'll clear your doubt! What's bothering you?",
+    "confusion": "Let's clear up the confusion! What's unclear?",
+    "clarify": "Absolutely! Let me clarify that for you! 💡",
+    "explain better": "Sure! Let me break it down better for you!",
+    "simple terms": "Of course! Let me put it in simple terms! 📖",
+    "easier way": "Absolutely! Let me explain it an easier way!",
+    "summarize": "Great! Let me summarize that key point for you! 📋",
+    "summary": "Here's the summary: What would you like to know more about?",
+    "overview": "Let me give you an overview! 🎬 What interests you?",
+    "understand now": "Fantastic! You've got it! Any more questions? 🎉",
+    "got it": "Excellent! You've got it! Ready for the next part? ✅",
+    "finally understand": "Yes! I'm so proud you understand now! 🌟",
+    "makes sense": "Wonderful! It all makes sense now! Ready for more?",
+    "clear now": "Perfect! Everything's crystal clear! Moving forward? 🚀",
+};
+
+  /* ================================================================
+     INTERNAL STATE
+  ================================================================ */
+  const API_BASE   = 'https://generativelanguage.googleapis.com/v1beta/models';
+  const STORE_KEY  = 'nexus_chat_v1'; // localStorage key for resume chat
+
+  let conversationHistory = [];  // Gemini multi-turn history
+  let isBotTyping  = false;
+  let isDark       = false;      // Start in light mode
+  let isMuted      = true;       // TTS muted state
+  let isListening  = false;      // mic active state
+  let recognition  = null;       // SpeechRecognition instance
+  let popupOpen    = false;
+  let ttTimer;
+
+  const placeholders = ['Ask your question…','What would you like to learn?','Any doubts?','Curious about something?','Test your knowledge…'];
+  let phIdx = 0;
+
+  /* ================================================================
+     DOM REFERENCES
+  ================================================================ */
+  const launcher      = document.getElementById('chat-launcher');
+  const popup         = document.getElementById('chat-popup');
+  const tooltip       = document.getElementById('launcher-tooltip');
+  const badge         = document.getElementById('launcher-badge');
+  const emojiEl       = document.getElementById('launcher-emoji');
+  const hdrClose      = document.getElementById('hdr-close');
+  const hdrClear      = document.getElementById('hdr-clear');
+  const hdrTheme      = document.getElementById('hdr-theme');
+  const hdrMute       = document.getElementById('hdr-mute');
+  const muteIcon      = document.getElementById('mute-icon');
+  const themeIcon     = document.getElementById('theme-icon');
+  const chatBody      = document.getElementById('chat-body');
+  const msgsEl        = document.getElementById('msgs');
+  const typingRow     = document.getElementById('typing-row');
+  const textarea      = document.getElementById('chat-textarea');
+  const sendBtn       = document.getElementById('send-btn');
+  const charCount     = document.getElementById('char-count');
+  const statusText    = document.getElementById('status-text');
+  const greeting      = document.getElementById('chat-greeting');
+  const scrollDownBtn = document.getElementById('scroll-down-btn');
+  const micBtn        = document.getElementById('mic-btn');
+  const voiceStatus   = document.getElementById('voice-status');
+  const voiceStatusTx = document.getElementById('voice-status-text');
+  const hdrExport     = document.getElementById('hdr-export');
+  const exportOverlay = document.getElementById('export-overlay');
+
+  function updateExportBtn() {
+    const hasMessages = msgsEl.querySelectorAll('.msg-row.user, .msg-row.bot:not(.err)').length > 0;
+    hdrExport.disabled = !hasMessages;
+    hdrExport.title    = hasMessages ? 'Download transcript' : 'No messages to export yet';
+  }
+
+  /* ================================================================
+     RESUME CHAT
+     Saves every message to localStorage so when the user
+     reopens the page the full conversation is restored.
+     conversationHistory (Gemini context) is also saved so
+     the AI remembers previous answers across sessions.
+  ================================================================ */
+  function saveToStorage() {
+    try {
+      const allRows = [];
+      msgsEl.querySelectorAll('.msg-row, .date-sep').forEach(row => {
+        if (row.classList.contains('option-bubble-row')) return; // Don't save option bubbles
+        
+        // Save date separators
+        if (row.classList.contains('date-sep')) {
+          const datePill = row.querySelector('.date-sep-pill');
+          allRows.push({
+            type: 'date-sep',
+            label: datePill ? datePill.textContent : '',
+          });
+          return;
+        }
+        
+        // Save messages
+        const isUser = row.classList.contains('user');
+        const isErr  = row.classList.contains('err');
+        const bubble = row.querySelector('.bubble span');
+        const timeEl = row.querySelector('.bubble-time');
+        if (!bubble) return;
+        const timestamp = timeEl ? timeEl.getAttribute('data-timestamp') : new Date().toISOString();
+        allRows.push({
+          type: isErr ? 'err' : (isUser ? 'user' : 'bot'),
+          html: bubble.innerHTML,
+          raw:  bubble.getAttribute('data-raw') || bubble.innerText,
+          time: timeEl ? timeEl.textContent : '',
+          timestamp: timestamp
+        });
+      });
+      localStorage.setItem(STORE_KEY, JSON.stringify({
+        history:  conversationHistory,
+        messages: allRows
+      }));
+    } catch(e) { /* storage full or unavailable */ }
+  }
+
+  function loadFromStorage() {
+    try {
+      const raw = localStorage.getItem(STORE_KEY);
+      if (!raw) return;
+      const data = JSON.parse(raw);
+      if (!data || !data.messages || data.messages.length === 0) return;
+
+      // Restore Gemini history for seamless AI continuation
+      conversationHistory = data.history || [];
+
+      // Hide greeting
+      greeting.style.display = 'none';
+
+      // Re-render all saved messages and date separators
+      data.messages.forEach(m => {
+        // Restore date separators
+        if (m.type === 'date-sep') {
+          const sep = document.createElement('div');
+          sep.className = 'date-sep';
+          sep.dataset.dateLabel = m.label;
+          sep.innerHTML = `<span class="date-sep-pill">${m.label}</span>`;
+          msgsEl.appendChild(sep);
+          return;
+        }
+        
+        // Restore messages
+        const row = document.createElement('div');
+        row.className = `msg-row ${m.type === 'err' ? 'bot err' : m.type}`;
+
+        const msgDate = m.timestamp ? new Date(m.timestamp) : new Date();
+        const timeStr = msgDate.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+
+        if (m.type === 'user') {
+          row.innerHTML = `
+            <div class="bubble">
+              <span data-raw="${encodeURIComponent(m.raw)}">${m.html}</span>
+              <span class="bubble-time" data-timestamp="${msgDate.toISOString()}">${timeStr}</span>
+            </div>`;
+        } else if (m.type === 'bot') {
+          const msgId = 'r_' + Math.random().toString(36).slice(2,8);
+          row.innerHTML = `
+            <div class="msg-avatar" aria-hidden="true">✦</div>
+            <div class="bubble">
+              <span data-raw="${encodeURIComponent(m.raw)}">${m.html}</span>
+              <div class="bubble-footer">
+                <button class="speak-btn" data-text="${encodeURIComponent(m.raw)}"
+                  aria-label="Read aloud" title="Read aloud" onclick="toggleSpeak(this)">
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                  </svg>
+                </button>
+              </div>
+              <span class="bubble-time" data-timestamp="${msgDate.toISOString()}">${timeStr}</span>
+            </div>`;
+        } else {
+          row.innerHTML = `
+            <div class="msg-avatar" aria-hidden="true">✦</div>
+            <div class="bubble"><span>${m.html}</span><span class="bubble-time" data-timestamp="${msgDate.toISOString()}">${timeStr}</span></div>`;
+        }
+        msgsEl.appendChild(row);
+      });
+
+      // Scroll to bottom instantly without animation
+      chatBody.scrollTop = chatBody.scrollHeight;
+
+      // Show badge to indicate saved messages
+      if (data.messages.length > 0) badge.classList.add('show');
+
+      updateExportBtn();
+    } catch(e) { console.warn('Resume chat failed:', e); }
+  }
+
+  function clearStorage() {
+    try { localStorage.removeItem(STORE_KEY); } catch(e) {}
+  }
+
+  /* ================================================================
+     LAUNCHER — OPEN / CLOSE
+  ================================================================ */
+  setTimeout(() => {
+    tooltip.classList.add('show');
+    ttTimer = setTimeout(() => tooltip.classList.remove('show'), 3000);
+  }, 900);
+
+  launcher.addEventListener('mouseenter', () => {
+    if (!popupOpen) { clearTimeout(ttTimer); tooltip.classList.add('show'); }
+  });
+  launcher.addEventListener('mouseleave', () => {
+    ttTimer = setTimeout(() => tooltip.classList.remove('show'), 500);
+  });
+  launcher.addEventListener('click', () => popupOpen ? closePopup() : openPopup());
+  hdrClose.addEventListener('click', closePopup);
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && popupOpen) closePopup(); });
+
+  function openPopup() {
+    // Disable scroll animation temporarily to prevent visible scrolling
+    const originalScrollBehavior = chatBody.style.scrollBehavior;
+    chatBody.style.scrollBehavior = 'auto';
+    
+    // Instantly jump to latest messages without animation
+    chatBody.scrollTop = chatBody.scrollHeight;
+    
+    popupOpen = true;
+    popup.classList.add('open');
+    popup.setAttribute('aria-hidden','false');
+    launcher.setAttribute('aria-expanded','true');
+    badge.classList.remove('show');
+    tooltip.classList.remove('show');
+    
+    
+    setTimeout(() => {
+      chatBody.style.scrollBehavior = originalScrollBehavior;
+      textarea.focus();
+    }, 350);
+  }
+
+  function closePopup() {
+    popupOpen = false;
+    popup.classList.remove('open');
+    popup.setAttribute('aria-hidden','true');
+    launcher.setAttribute('aria-expanded','false');
+    emojiEl.innerHTML = `<img  src="./Sentra.png" alt="ZEN-G AI" width="25" height="40" style="display:block;filter:drop-shadow(0 0 2px rgba(108,77,230,0.4));">`;
+    stopListening();
+    launcher.focus();
+
+    // Show badge if there are messages
+    if (msgsEl.querySelectorAll('.msg-row').length > 0) badge.classList.add('show');
+  }
+
+  // Restore chat immediately on page load
+  loadFromStorage();
+
+  // Initialize theme icon based on initial isDark
+  themeIcon.innerHTML = isDark
+    ? `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`
+    : `<circle cx="12" cy="12" r="5"/>
+       <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+       <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+       <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+       <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+
+  function swapEmoji(next) {
+    emojiEl.style.transition = 'transform .14s ease-in,opacity .14s';
+    emojiEl.style.transform  = 'scale(0) rotate(90deg)';
+    emojiEl.style.opacity    = '0';
+    setTimeout(() => {
+      emojiEl.textContent = next;
+      emojiEl.style.animationPlayState = next === '👋' ? 'running' : 'paused';
+      emojiEl.style.transition = 'transform .22s cubic-bezier(.34,1.56,.64,1),opacity .14s';
+      emojiEl.style.transform  = 'scale(1) rotate(0deg)';
+      emojiEl.style.opacity    = '1';
+    }, 140);
+  }
+
+  /* ================================================================
+     THEME TOGGLE
+  ================================================================ */
+  hdrTheme.addEventListener('click', () => {
+    isDark = !isDark;
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+    themeIcon.style.cssText = 'transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .2s;transform:rotate(180deg);opacity:0';
+    setTimeout(() => {
+      themeIcon.innerHTML = isDark
+        ? `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>`
+        : `<circle cx="12" cy="12" r="5"/>
+           <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+           <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+           <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>`;
+      themeIcon.style.cssText = 'transition:transform .4s cubic-bezier(.34,1.56,.64,1),opacity .2s;transform:rotate(0deg);opacity:1';
+    }, 200);
+  });
+
+  /* ================================================================
+     🔇 MUTE / UNMUTE — controls TTS auto-play
+     When MUTED:   button glows amber, speaker icon shows slash,
+                   any active speech stops immediately.
+     When UNMUTED: normal speaker icon, bot replies auto-speak.
+  ================================================================ */
+  hdrMute.addEventListener('click', () => {
+    isMuted = !isMuted;
+    hdrMute.classList.toggle('muted', isMuted);
+    hdrMute.title = isMuted ? 'Unmute voice' : 'Mute voice';
+    hdrMute.setAttribute('aria-label', isMuted ? 'Unmute voice' : 'Mute voice');
+
+    if (isMuted) {
+      // Stop all speech instantly
+      window.speechSynthesis.cancel();
+      document.querySelectorAll('.speak-btn.speaking').forEach(b => b.classList.remove('speaking'));
+      if (statusText.textContent === 'Speaking…') statusText.textContent = 'Online';
+      // Swap to muted (slash) icon
+      muteIcon.innerHTML = `
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <line x1="23" y1="9" x2="17" y2="15"/>
+        <line x1="17" y1="9" x2="23" y2="15"/>`;
+    } else {
+      // Swap to unmuted (waves) icon
+      muteIcon.innerHTML = `
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"/>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"/>`;
+    }
+  });
+
+  /* ================================================================
+     EXPORT TRANSCRIPT
+  ================================================================ */
+  hdrExport.addEventListener('click', () => {
+    const msgCount = msgsEl.querySelectorAll('.msg-row.user, .msg-row.bot:not(.err)').length;
+    if (msgCount === 0) {
+      const sub = document.getElementById('export-sub');
+      sub.textContent = 'No messages to export yet.';
+      sub.style.color = 'var(--text-muted)';
+      exportOverlay.classList.add('show');
+      setTimeout(() => sub.style.color = '', 2000);
+    } else {
+      document.getElementById('export-sub').textContent = 'Choose a format to save your chat';
+      document.getElementById('export-sub').style.color = '';
+      document.getElementById('export-success').classList.remove('show');
+      exportOverlay.classList.add('show');
+    }
+  });
+
+  exportOverlay.addEventListener('click', e => {
+    if (e.target === exportOverlay) closeExport();
+  });
+
+  function closeExport() {
+    exportOverlay.classList.remove('show');
+  }
+
+  /* ----------------------------------------------------------------
+     Collect all messages from the DOM into a structured array
+  ---------------------------------------------------------------- */
+  function collectMessages() {
+    const msgs = [];
+    msgsEl.querySelectorAll('.msg-row, .date-sep').forEach(row => {
+      if (row.classList.contains('date-sep')) {
+        msgs.push({ type: 'date', label: row.querySelector('.date-sep-pill')?.textContent || '' });
+        return;
+      }
+      if (row.classList.contains('option-bubble-row')) return;
+      const isUser = row.classList.contains('user');
+      const isErr  = row.classList.contains('err');
+      const rawSpan = row.querySelector('[data-raw]');
+      const timeEl  = row.querySelector('.bubble-time');
+      const raw  = rawSpan ? decodeURIComponent(rawSpan.dataset.raw || '') : (row.querySelector('.bubble')?.innerText || '');
+      const time = timeEl ? timeEl.textContent.trim() : '';
+      msgs.push({ type: isErr ? 'error' : (isUser ? 'user' : 'bot'), text: raw, time });
+    });
+    return msgs;
+  }
+
+  /* ----------------------------------------------------------------
+     Export as .txt
+  ---------------------------------------------------------------- */
+  function buildTxt(msgs) {
+    const lines = ['ZEN-G AI — Chat Transcript', '='.repeat(40), ''];
+    msgs.forEach(m => {
+      if (m.type === 'date') { lines.push('', `── ${m.label} ──`, ''); return; }
+      const who = m.type === 'user' ? 'You' : m.type === 'bot' ? 'ZEN-G' : 'System';
+      lines.push(`[${m.time}] ${who}:`);
+      lines.push(m.text.trim());
+      lines.push('');
+    });
+    lines.push('='.repeat(40));
+    lines.push(`Exported on ${new Date().toLocaleString()}`);
+    return lines.join('\n');
+  }
+
+  /* ----------------------------------------------------------------
+     Export as .pdf — opens a styled print window, user saves as PDF
+  ---------------------------------------------------------------- */
+  function exportPdf(msgs) {
+    const rows = msgs.map(m => {
+      if (m.type === 'date') return `<div class="date-sep"><span class="pill">${m.label}</span></div>`;
+      const cls  = m.type === 'user' ? 'user' : m.type === 'bot' ? 'bot' : 'err';
+      const who  = m.type === 'user' ? 'You' : m.type === 'bot' ? 'ZEN-G AI' : 'System';
+      const safe = m.text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+      return `<div class="msg ${cls}"><div class="label">${who} <span class="time">${m.time}</span></div><div class="bubble">${safe}</div></div>`;
+    }).join('\n');
+
+    const dateStr = new Date().toLocaleDateString(undefined,{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+    const win = window.open('','_blank','width=780,height=900');
+    win.document.write(`<!DOCTYPE html>
+<html><head><meta charset="UTF-8"/>
+<title>ZEN-G AI — Chat Transcript</title>
+<style>
+  @page{margin:20mm 18mm}
+  *{box-sizing:border-box}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#fff;color:#1a1730;margin:0;padding:28px 32px;font-size:13px}
+  .header{display:flex;align-items:center;gap:12px;border-bottom:2px solid #6c4de6;padding-bottom:14px;margin-bottom:22px}
+  .logo{width:40px;height:40px;border-radius:10px;background:#6c4de6;display:flex;align-items:center;justify-content:center;color:#fff;font-size:18px;flex-shrink:0}
+  .brand-name{font-size:18px;font-weight:700;color:#1a1730}
+  .brand-sub{font-size:11px;color:#9896b8;margin-top:2px}
+  .chat{display:flex;flex-direction:column;gap:10px}
+  .date-sep{text-align:center;margin:10px 0 4px}
+  .pill{background:#ede9ff;color:#6c4de6;font-size:10px;padding:2px 10px;border-radius:999px;font-weight:500}
+  .msg{display:flex;flex-direction:column;gap:3px;page-break-inside:avoid}
+  .msg.user{align-items:flex-end}
+  .msg.bot,.msg.err{align-items:flex-start}
+  .label{font-size:10px;color:#9896b8;padding:0 4px}
+  .time{color:#c4c2d8}
+  .bubble{max-width:78%;padding:8px 12px;border-radius:14px;font-size:12px;line-height:1.6;word-break:break-word}
+  .user .bubble{background:#6c4de6;color:#fff;border-bottom-right-radius:3px}
+  .bot .bubble{background:#ede9ff;color:#2e2a50;border-bottom-left-radius:3px}
+  .err .bubble{background:#fee2e2;color:#dc2626}
+  .footer{margin-top:28px;font-size:10px;color:#9896b8;border-top:1px solid #e5e3ff;padding-top:10px;display:flex;justify-content:space-between}
+  @media print{body{padding:0}.no-print{display:none}}
+</style></head>
+<body>
+<div class="header">
+  <div class="logo">✦</div>
+  <div><div class="brand-name">ZEN-G AI</div><div class="brand-sub">Chat Transcript — ${dateStr}</div></div>
+</div>
+<div class="chat">${rows}</div>
+<div class="footer"><span>ZEN-G AI · Edvantech</span><span>Exported ${new Date().toLocaleString()}</span></div>
+<script>window.onload=function(){window.print();}<\/script>
+</body></html>`);
+    win.document.close();
+  }
+
+  /* ----------------------------------------------------------------
+     Trigger download
+  ---------------------------------------------------------------- */
+  function exportChat(format) {
+    const msgs = collectMessages();
+    if (msgs.filter(m => m.type !== 'date').length === 0) return;
+
+    const ts = new Date().toISOString().slice(0,16).replace(/[T:]/g,'-');
+    const successEl  = document.getElementById('export-success');
+    const successMsg = document.getElementById('export-success-msg');
+
+    if (format === 'pdf') {
+      exportPdf(msgs);
+      successMsg.textContent = 'PDF print window opened!';
+      successEl.classList.add('show');
+      setTimeout(closeExport, 2200);
+      return;
+    }
+
+    const content = buildTxt(msgs);
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `zeng-transcript-${ts}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+
+    successMsg.textContent = `zeng-transcript-${ts}.txt downloaded!`;
+    successEl.classList.add('show');
+    setTimeout(closeExport, 2200);
+  }
+
+  /* ================================================================
+     CLEAR CONVERSATION
+  ================================================================ */
+  hdrClear.addEventListener('click', () => {
+    window.speechSynthesis.cancel();
+    conversationHistory = [];
+    msgsEl.innerHTML    = '';
+    _lastMsgDate        = null;
+    clearStorage();
+    greeting.style.cssText = '';
+    updateExportBtn();
+  });
+
+  /* ================================================================
+     INPUT HANDLING
+  ================================================================ */
+  textarea.addEventListener('input', () => {
+    textarea.style.height = 'auto';
+    textarea.style.height = Math.min(textarea.scrollHeight, 100) + 'px';
+    const len = textarea.value.length;
+    if (len > 1800) {
+      charCount.textContent = `${2000 - len} left`;
+      charCount.className = 'char-count ' + (len > 1950 ? 'danger' : 'warn');
+    } else {
+      charCount.textContent = '';
+      charCount.className   = 'char-count';
+    }
+    sendBtn.disabled = len === 0 || isBotTyping;
+  });
+  textarea.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); if (!sendBtn.disabled) handleSend(); }
+  });
+  sendBtn.addEventListener('click', handleSend);
+
+  /* ================================================================
+     SEND MESSAGE
+  ================================================================ */
+  function handleSend() {
+    const text = textarea.value.trim();
+    if (!text || isBotTyping) return;
+
+    if (greeting.style.display !== 'none') {
+      greeting.style.transition = 'opacity .3s,transform .3s';
+      greeting.style.opacity    = '0';
+      greeting.style.transform  = 'translateY(-10px)';
+      setTimeout(() => greeting.style.display = 'none', 300);
+    }
+
+    textarea.value        = '';
+    textarea.style.height = 'auto';
+    sendBtn.disabled      = true;
+    charCount.textContent = '';
+
+    maybeInsertDateSep(); // ✅ WhatsApp style date separator
+    addMessage('user', text);
+    callGemini(text);
+  }
+
+  let _lastMsgDate = null;
+
+  function maybeInsertDateSep() {
+    const now = new Date();
+    const label = formatDateLabel(now);
+    if (label === _lastMsgDate) return;
+    _lastMsgDate = label;
+    const sep = document.createElement('div');
+    sep.className = 'date-sep';
+    sep.dataset.dateLabel = label;
+    sep.innerHTML = `<span class="date-sep-pill">${label}</span>`;
+    msgsEl.appendChild(sep);
+  }
+
+  function formatDateLabel(d) {
+    const today = new Date();
+    const diff = Math.floor(
+      (new Date(today.toDateString()) - new Date(d.toDateString())) / 86400000
+    );
+    if (diff === 0) return 'Today';
+    if (diff === 1) return 'Yesterday';
+    return d.toLocaleDateString(undefined, {
+      weekday: 'long',
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    });
+  }
+
+  function sendChip(el) {
+    const text = el.textContent.replace(/^✦\s*/,'').trim();
+    textarea.value   = text;
+    sendBtn.disabled = false;
+    handleSend();
+  }
+
+  /* ================================================================
+     GEMINI API CALL
+  ================================================================ */
+
+  /* ================================================================
+     🧠 SMART RESPONSE ENGINE
+     Priority: Greeting → Exact match → Top-4 options picker → Fallback
+  ================================================================ */
+
+  const STOPWORDS = new Set(['what','is','are','how','do','i','a','an','the','to',
+    'of','in','on','at','my','me','can','should','will','and','or','for','be',
+    'it','its','with','from','by','was','were','have','has','been','if','so',
+    'that','this','they','there','after','about','but','not','would','could',
+    'who','why','when','where','which','did','does','got','get','give']);
+
+  function tokenise(text) {
+    return text.toLowerCase()
+      .replace(/[^a-z0-9\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length > 2 && !STOPWORDS.has(w));
+  }
+
+  // Levenshtein edit distance — counts single-char edits needed to turn a into b
+  function editDistance(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    const dp = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+    for (let j = 1; j <= b.length; j++) dp[0][j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      for (let j = 1; j <= b.length; j++) {
+        dp[i][j] = a[i-1] === b[j-1]
+          ? dp[i-1][j-1]
+          : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+      }
+    }
+    return dp[a.length][b.length];
+  }
+
+  // Score a single query token against a single entry token
+  // Exact=2, substring=0.5, typo within tolerance=1, no match=0
+  function fuzzyTokenScore(qt, et) {
+    if (qt === et) return 2;
+    if (et.includes(qt) || qt.includes(et)) return 0.5;
+    const maxDist = qt.length >= 8 ? 2 : qt.length >= 5 ? 1 : 0;
+    if (maxDist > 0 && editDistance(qt, et) <= maxDist) return 1;
+    return 0;
+  }
+
+  function scoreEntry(entry, queryTokens) {
+    const eTokens = tokenise(entry.question);
+    let score = 0;
+    for (const qt of queryTokens) {
+      let best = 0;
+      for (const et of eTokens) {
+        const s = fuzzyTokenScore(qt, et);
+        if (s > best) best = s;
+      }
+      score += best;
+    }
+    return score;
+  }
+
+  // Returns ALL scored matches above threshold, sorted best-first, deduplicated by question
+  function findAllMatches(userText) {
+    const tokens = tokenise(userText);
+    if (tokens.length === 0) return [];
+    // Slightly lower threshold to catch typo matches (score 1 instead of 2)
+    const threshold = Math.max(1.0, tokens.length * 0.35);
+    const seen = new Set();
+
+    return knowledgeBase
+      .map(entry => ({ entry, score: scoreEntry(entry, tokens) }))
+      .filter(({ entry, score }) => {
+        if (score < threshold) return false;
+        if (seen.has(entry.question)) return false;
+        seen.add(entry.question);
+        return true;
+      })
+      .sort((a, b) => b.score - a.score)
+      .map(x => x.entry);
+  }
+
+  /* ================================================================
+     OPTION PICKER STATE
+     Tracks which questions were already shown so "show more" works
+  ================================================================ */
+  // sessionMatchState: { userText, allMatches, shownCount }
+  let sessionMatchState = null;
+
+  /* ================================================================
+     HELPER — normalise a question string for comparison
+  ================================================================ */
+  function normaliseQ(q) {
+    return q.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, ' ').trim();
+  }
+
+  // Returns a Set of normalised question strings already sent by the user
+  function getAskedQuestionsSet() {
+    const asked = new Set();
+    // From conversationHistory (Gemini-style array)
+    conversationHistory
+      .filter(h => h.role === 'user')
+      .forEach(h => {
+        const text = Array.isArray(h.parts) ? h.parts[0]?.text : h.parts;
+        if (text) asked.add(normaliseQ(text));
+      });
+    // Also scan DOM user bubbles (covers restored chat from localStorage)
+    document.querySelectorAll('.msg-row.user .bubble span[data-raw]').forEach(span => {
+      const raw = decodeURIComponent(span.dataset.raw || '');
+      if (raw) asked.add(normaliseQ(raw));
+    });
+    return asked;
+  }
+
+  /* ================================================================
+     RENDER OPTION CHIPS in a bot bubble
+  ================================================================ */
+  function renderOptionBubble(questions, isMore) {
+    const time = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    const row  = document.createElement('div');
+    row.className = 'msg-row bot option-bubble-row';
+
+    const intro = isMore
+      ? 'Here are more related questions:'
+      : 'I found several related topics. Please choose one:';
+
+    // Build set of questions already asked in this chat session
+    const askedNow = getAskedQuestionsSet();
+
+    // Build option buttons HTML — disable any already asked
+    const optionsHtml = questions.map((q, idx) => {
+      const alreadyAsked = askedNow.has(normaliseQ(q.question));
+      const extraClass   = alreadyAsked ? ' already-asked' : '';
+      const disabledAttr = alreadyAsked ? ' disabled aria-disabled="true" title="Already asked"' : '';
+      return `<button class="option-btn${extraClass}" onclick="handleOptionClick(this)" data-question="${encodeURIComponent(q.question)}"${disabledAttr}>
+        <span class="option-num">${idx + 1}</span>
+        <span class="option-text">${q.question}</span>
+      </button>`;
+    }).join('');
+
+    // Console log the options
+    console.log('%c📋 Displaying Options:', 'color: #6c4de6; font-weight: bold; font-size: 14px;');
+    questions.forEach((q, idx) => {
+      console.log(`  ${idx + 1}. ${q.question}`);
+    });
+
+    // Check if there are more unseen matches to show
+    const totalShown   = sessionMatchState ? sessionMatchState.shownCount : questions.length;
+    const totalMatches = sessionMatchState ? sessionMatchState.allMatches.length : questions.length;
+    const hasMore      = totalShown < totalMatches;
+
+    const moreBtn = hasMore
+      ? `<button class="show-more-btn" onclick="handleShowMore()">Show ${Math.min(4, totalMatches - totalShown)} more options ↓</button>`
+      : '';
+
+    row.innerHTML = `
+      <div class="msg-avatar" aria-hidden="true">✦</div>
+      <div class="bubble option-bubble">
+        <span class="option-intro">${intro}</span>
+        <div class="options-list">${optionsHtml}</div>
+        ${moreBtn}
+        <span class="bubble-time">${time}</span>
+      </div>`;
+
+    maybeInsertDateSep();
+    msgsEl.appendChild(row);   
+    scrollToBottom();
+    saveToStorage();
+  }
+
+  /* ================================================================
+     LEARNER CLICKS AN OPTION
+  ================================================================ */
+  function handleOptionClick(btn) {
+    const question = decodeURIComponent(btn.dataset.question);
+
+    // Disable only the clicked button — mark it as "just clicked / already asked"
+    btn.disabled = true;
+    btn.classList.add('just-clicked');
+    btn.style.cursor = 'default';
+
+    // Also disable the show-more button so no further navigation from this bubble
+    // while we process the answer (re-enable isn't needed — state clears)
+    const bubble = btn.closest('.option-bubble');
+    if (bubble) {
+      const mb = bubble.querySelector('.show-more-btn');
+      if (mb) { mb.disabled = true; mb.style.opacity = '0.5'; }
+    }
+
+    // Show the chosen question as a user message
+    addMessage('user', question);
+
+    // Find and show the answer
+    const entry = knowledgeBase.find(e => e.question === question);
+    if (entry) {
+      const botText = entry.answer.trim();
+      addMessage('bot', botText);
+      if (!isMuted) speakText(botText, null);
+    }
+
+    // Clear match state so next query starts fresh
+    sessionMatchState = null;
+
+    // After answering, update ALL visible option bubbles — disable this question everywhere
+    setTimeout(() => disableQuestionInAllBubbles(question), 50);
+  }
+
+  // Disable a specific question button across all rendered option bubbles
+  function disableQuestionInAllBubbles(question) {
+    const encoded = encodeURIComponent(question);
+    document.querySelectorAll(`.option-btn[data-question="${encoded}"]`).forEach(btn => {
+      if (!btn.disabled) {
+        btn.disabled = true;
+        btn.classList.add('already-asked');
+        btn.style.cursor = 'default';
+      }
+    });
+  }
+
+  /* ================================================================
+     SHOW MORE — next 4 unseen options
+  ================================================================ */
+  function handleShowMore() {
+    if (!sessionMatchState) return;
+    const { allMatches, shownCount } = sessionMatchState;
+    const nextBatch = allMatches.slice(shownCount, shownCount + 4);
+    if (nextBatch.length === 0) return;
+
+    sessionMatchState.shownCount += nextBatch.length;
+
+    // Disable the "show more" button in the last bubble
+    const allRows = msgsEl.querySelectorAll('.option-bubble-row');
+    const lastRow = allRows[allRows.length - 1];
+    if (lastRow) {
+      const mb = lastRow.querySelector('.show-more-btn');
+      if (mb) { mb.disabled = true; mb.style.opacity = '0.5'; }
+    }
+
+    renderOptionBubble(nextBatch, true);
+  }
+
+  /* ================================================================
+     SENTRA RESPONSE FUNCTION
+  ================================================================ */
+  async function callGemini(userText) {
+    isBotTyping = true;
+    statusText.textContent = 'Typing…';
+
+    typingRow.style.display   = 'flex';
+    typingRow.style.animation = 'msg-in var(--speed-base) var(--ease-spring) both';
+    scrollToBottom();
+
+    const delay = ms => new Promise(r => setTimeout(r, ms));
+    await delay(500 + Math.random() * 500);
+
+    typingRow.style.display = 'none';
+
+    // 1. Greeting check
+    const normalised = userText.toLowerCase().trim().replace(/[^a-z0-9\s']/g, '');
+    if (greetings[normalised]) {
+      addMessage('bot', greetings[normalised]);
+      if (!isMuted) speakText(greetings[normalised], null);
+      isBotTyping = false; statusText.textContent = 'Online';
+      sendBtn.disabled = textarea.value.trim().length === 0;
+      return;
+    }
+
+    // 2. Exact question match → answer immediately
+    const exactMatch = knowledgeBase.find(
+      e => e.question.toLowerCase().trim() === userText.toLowerCase().trim()
+    );
+    if (exactMatch) {
+      const botText = exactMatch.answer.trim();
+      addMessage('bot', botText);
+      if (!isMuted) speakText(botText, null);
+      isBotTyping = false; statusText.textContent = 'Online';
+      sendBtn.disabled = textarea.value.trim().length === 0;
+      sessionMatchState = null;
+      return;
+    }
+
+    // 3. Fuzzy — get ALL ranked matches, show first 4 as options
+    const allMatches = findAllMatches(userText);
+    allMatches.forEach((m, i) => console.log(`  ${i + 1}. ${m.question}`));
+
+    // Filter out already asked questions
+    const askedQuestions = new Set(conversationHistory.filter(h => h.role === 'user').map(h => h.parts[0].text.toLowerCase().replace(/[^\w\s]/g, '').trim()));
+    
+    let availableMatches = allMatches.filter(entry => !askedQuestions.has(entry.question.toLowerCase().replace(/[^\w\s]/g, '').trim()));
+
+    // If no available matches, reset to all matches (allow repetition)
+    if (availableMatches.length === 0) {
+      availableMatches = allMatches;
+    }
+
+    if (availableMatches.length === 0) {
+      // No matches at all
+      const fallback = "I'm sorry, I couldn't find anything related to that in the course material. Please try a different keyword! 😊";
+      addMessage('bot', fallback);
+      if (!isMuted) speakText(fallback, null);
+      sessionMatchState = null;
+
+    } else if (availableMatches.length === 1) {
+      // Only one match → answer directly
+      const botText = availableMatches[0].answer.trim();
+      addMessage('bot', botText);
+      if (!isMuted) speakText(botText, null);
+      sessionMatchState = null;
+
+    } else {
+      // Multiple matches → show first 4 as clickable options
+      const firstBatch = availableMatches.slice(0, 4);
+      sessionMatchState = { userText, allMatches: availableMatches, shownCount: firstBatch.length };
+      renderOptionBubble(firstBatch, false);
+    }
+
+    isBotTyping            = false;
+    statusText.textContent = 'Online';
+    sendBtn.disabled       = textarea.value.trim().length === 0;
+    scrollToBottom();
+  }
+
+
+  /* ================================================================
+     ADD MESSAGE TO DOM + SAVE
+  ================================================================ */
+  function addMessage(type, rawText, msgDate = new Date()) {
+    const time = msgDate.toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' });
+    const html = type === 'err' ? safeEsc(rawText) : mdToHtml(rawText);
+    const row  = document.createElement('div');
+    row.className = `msg-row ${type === 'err' ? 'bot err' : type}`;
+
+    if (type === 'user') {
+      row.innerHTML = `
+        <div class="bubble">
+          <span data-raw="${encodeURIComponent(rawText)}">${html}</span>
+          <span class="bubble-time" data-timestamp="${msgDate.toISOString()}">${time}</span>
+        </div>`;
+      msgsEl.appendChild(row);
+      scrollToBottom();
+      saveToStorage();
+      updateExportBtn();
+      return;
+    }
+
+    // ── BOT / ERR bubble ────────────────────────────────────────────
+    const speakIcon = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>`;
+    const speakBtn  = `<button class="speak-btn" data-text="${encodeURIComponent(rawText)}" aria-label="Read aloud" title="Read aloud" onclick="toggleSpeak(this)">${speakIcon}</button>`;
+
+    const wordCount = rawText.trim().split(/\s+/).length;
+    const useTyping = (type === 'bot') && wordCount > 1;
+
+    if (useTyping) {
+      // Render bubble skeleton — content filled by typewriter
+      row.innerHTML = `
+        <div class="msg-avatar" aria-hidden="true">&#10022;</div>
+        <div class="bubble">
+          <span class="typewriter-content" data-raw="${encodeURIComponent(rawText)}"></span><span class="typewriter-cursor"></span>
+          <div class="bubble-footer" style="display:none"><button class="speak-btn" data-text="${encodeURIComponent(rawText)}" aria-label="Read aloud" title="Read aloud" onclick="toggleSpeak(this)">${speakIcon}</button></div>
+          <span class="bubble-time" style="display:none" data-timestamp="${msgDate.toISOString()}">${time}</span>
+        </div>`;
+
+      msgsEl.appendChild(row);
+      scrollToBottom();
+
+      const contentEl = row.querySelector('.typewriter-content');
+      const cursorEl  = row.querySelector('.typewriter-cursor');
+      const footerEl  = row.querySelector('.bubble-footer');
+      const timeEl    = row.querySelector('.bubble-time');
+
+      let i = 0;
+      const chars = rawText.split('');
+      const speed = Math.max(10, Math.min(22, 1200 / chars.length));
+
+      function typeNext() {
+        if (i < chars.length) {
+          i++;
+          contentEl.innerHTML = mdToHtml(rawText.slice(0, i));
+          scrollToBottom();
+          setTimeout(typeNext, speed);
+        } else {
+          cursorEl.remove();
+          footerEl.style.display = '';
+          timeEl.style.display   = '';
+          saveToStorage();
+          updateExportBtn();
+        }
+      }
+      setTimeout(typeNext, speed);
+
+    } else {
+      // Short response — render instantly
+      row.innerHTML = `
+        <div class="msg-avatar" aria-hidden="true">&#10022;</div>
+        <div class="bubble">
+          <span data-raw="${encodeURIComponent(rawText)}">${html}</span>
+          <div class="bubble-footer">${speakBtn}</div>
+          <span class="bubble-time" data-timestamp="${msgDate.toISOString()}">${time}</span>
+        </div>`;
+      msgsEl.appendChild(row);
+      scrollToBottom();
+      saveToStorage();
+      updateExportBtn();
+    }
+  }
+
+  /* ================================================================
+     🔊 TEXT-TO-SPEECH
+     speakText(text, speakBtn?)
+       - Cancels any current speech
+       - Strips markdown for clean audio
+       - Shows green pulsing ring on the speak button
+       - Updates status bar to "Speaking…"
+     toggleSpeak(btn)
+       - Attached to each 🔊 button on bot bubbles
+       - Click once → speak, click again → stop
+  ================================================================ */
+  function speakText(rawText, speakBtnEl) {
+    if (!('speechSynthesis' in window)) return;
+    if (isMuted) return;
+
+    window.speechSynthesis.cancel();
+    document.querySelectorAll('.speak-btn.speaking').forEach(b => b.classList.remove('speaking'));
+
+    // Strip markdown symbols so TTS reads naturally
+    const clean = rawText
+      .replace(/\*\*(.*?)\*\*/g,'$1')
+      .replace(/\*(.*?)\*/g,'$1')
+      .replace(/`([^`]+)`/g,'$1')
+      .replace(/#+\s/g,'')
+      .replace(/[-*•]\s/g,'')
+      .replace(/<[^>]+>/g,'')
+      .replace(/\n/g,' ')
+      .trim();
+
+    const utt    = new SpeechSynthesisUtterance(clean);
+    utt.rate     = 1.0;  // ← change to slow/speed up voice
+    utt.pitch    = 1.0;  // ← change pitch (0–2)
+    utt.volume   = 1.0;
+
+    // Try to pick a pleasant voice
+    const voices = window.speechSynthesis.getVoices();
+    const pick   = voices.find(v =>
+      v.name.includes('Google') || v.name.includes('Samantha') ||
+      v.name.includes('Karen')  || v.name.includes('Daniel')   ||
+      v.name.includes('Aria')
+    );
+    if (pick) utt.voice = pick;
+
+    if (speakBtnEl) speakBtnEl.classList.add('speaking');
+
+    utt.onstart  = () => { statusText.textContent = 'Speaking…'; };
+    utt.onend    = utt.onerror = () => {
+      if (speakBtnEl) speakBtnEl.classList.remove('speaking');
+      if (statusText.textContent === 'Speaking…') statusText.textContent = 'Online';
+    };
+
+    window.speechSynthesis.speak(utt);
+  }
+
+  // Per-bubble play/stop toggle on 🔊 button
+  function toggleSpeak(btn) {
+    if (btn.classList.contains('speaking')) {
+      window.speechSynthesis.cancel();
+      btn.classList.remove('speaking');
+      if (statusText.textContent === 'Speaking…') statusText.textContent = 'Online';
+    } else {
+      const text = decodeURIComponent(btn.dataset.text);
+      speakText(text, btn);
+    }
+  }
+
+  /* ================================================================
+     🎤 VOICE INPUT — Speech Recognition (mic)
+     Click mic → starts listening → real-time interim results
+     shown in textarea → auto-sends when speech ends.
+     Click again while active → cancels listening.
+     Shows red pulsing ring on mic button while active.
+     Shows "Listening…" in voice status bar.
+  ================================================================ */
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  micBtn.addEventListener('click', () => {
+    if (!SpeechRec) {
+      addMessage('err', '⚠ Voice input is not supported in this browser. Please use Chrome or Edge.');
+      return;
+    }
+    isListening ? stopListening() : startListening();
+  });
+
+  function startListening() {
+    if (isListening) return;
+    recognition = new SpeechRec();
+    recognition.continuous     = false;
+    recognition.interimResults = true;  // show live partial text
+    recognition.lang           = 'en-US'; // ← change language here e.g. 'hi-IN' for Hindi
+
+    recognition.onstart = () => {
+      isListening = true;
+      micBtn.classList.add('listening');
+      micBtn.setAttribute('aria-label','Stop voice input');
+      micBtn.title = 'Click to stop';
+      setVoiceStatus('Listening…','active');
+    };
+
+    // Show partial (interim) transcript live in textarea
+    recognition.onresult = (event) => {
+      let interim = '', final = '';
+      for (let i = event.resultIndex; i < event.results.length; i++) {
+        const t = event.results[i][0].transcript;
+        event.results[i].isFinal ? (final += t) : (interim += t);
+      }
+      textarea.value = final || interim;
+      textarea.style.height = 'auto';
+      textarea.style.height = Math.min(textarea.scrollHeight,100) + 'px';
+      sendBtn.disabled = textarea.value.trim().length === 0 || isBotTyping;
+
+      if (final) setVoiceStatus('Got it! Sending…','speaking');
+    };
+
+    recognition.onspeechend = () => recognition.stop();
+
+    recognition.onend = () => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      micBtn.setAttribute('aria-label','Start voice input');
+      micBtn.title = 'Click to speak';
+      hideVoiceStatus();
+      // Auto-send after a brief pause if text was captured
+      if (textarea.value.trim().length > 0 && !isBotTyping) {
+        setTimeout(handleSend, 250);
+      }
+    };
+
+    recognition.onerror = (e) => {
+      isListening = false;
+      micBtn.classList.remove('listening');
+      hideVoiceStatus();
+      if (e.error !== 'aborted' && e.error !== 'no-speech') {
+        addMessage('err', `⚠ Mic error: ${e.error}`);
+      }
+    };
+
+    recognition.start();
+  }
+
+  function stopListening() {
+    if (recognition && isListening) recognition.stop();
+    isListening = false;
+    micBtn.classList.remove('listening');
+    hideVoiceStatus();
+  }
+
+  function setVoiceStatus(text, cls) {
+    voiceStatusTx.textContent = text;
+    voiceStatus.className     = `voice-status ${cls}`;
+  }
+ 
+  function hideVoiceStatus() {
+    voiceStatus.className = 'voice-status';
+  }
+
+  /* ================================================================
+     MARKDOWN → HTML
+  ================================================================ */
+  function mdToHtml(raw) {
+    return raw
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#039;')
+      .replace(/^###\s+(.+)$/gm,'<h3>$1</h3>')
+      .replace(/^##\s+(.+)$/gm, '<h3>$1</h3>')
+      .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g,    '<em>$1</em>')
+      .replace(/`([^`]+)`/g,    '<code>$1</code>')
+      .replace(/^[\*\-]\s+(.+)$/gm,'<li>$1</li>')
+      .replace(/^\d+\.\s+(.+)$/gm, '<li>$1</li>')
+      .replace(/((?:<li>.*<\/li>\n?)+)/g, m => `<ul>${m}</ul>`)
+      .replace(/\n/g,'<br>');
+  }
+
+  function safeEsc(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  /* ================================================================
+     SCROLL
+  ================================================================ */
+  function scrollToBottom() {
+    document.getElementById('scroll-anchor').scrollIntoView({ behavior:'smooth', block:'end' });
+  }
+ 
+  chatBody.addEventListener('scroll', () => {
+    const dist = chatBody.scrollHeight - chatBody.scrollTop - chatBody.clientHeight;
+    scrollDownBtn.classList.toggle('show', dist > 100);
+  });
+
+  /* ================================================================
+     PLACEHOLDER CYCLING
+  ================================================================ */
+  setInterval(() => {
+    if (document.activeElement === textarea || textarea.value.length > 0) return;
+    phIdx = (phIdx + 1) % placeholders.length;
+    textarea.placeholder = placeholders[phIdx];
+  }, 3500);
+
+  // Pre-load TTS voices so first speak call is instant
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.getVoices();
+    window.speechSynthesis.addEventListener('voiceschanged', () => window.speechSynthesis.getVoices());
+  }
+</script>
+</body>
+</html>

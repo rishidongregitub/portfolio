@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ADAPT Course Player – Workplace Safety</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800;900&family=Merriweather:wght@700;900&display=swap');
+
+:root {
+  --primary:#1b3a6b;
+  --accent:#e84545;
+  --accent2:#f7a440;
+  --green:#27ae60;
+  --bg:#eef1f7;
+  --card:#fff;
+  --text:#1b3a6b;
+  --muted:#6b7a99;
+  --navh:62px;
+  --sidebar:270px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* ── TOP NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;height:var(--navh);
+  background:var(--primary);
+  display:flex;align-items:center;padding:0 20px;gap:14px;
+  z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.3);
+}
+.nav .brand{font-family:'Merriweather',serif;color:#fff;font-size:1.15rem;flex:1}
+.nav .brand span{color:var(--accent2)}
+.nav .course-name{color:rgba(255,255,255,.65);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;display:none}
+@media(min-width:640px){.nav .course-name{display:block}}
+.hamburger{background:none;border:2px solid rgba(255,255,255,.3);border-radius:8px;cursor:pointer;padding:6px 8px;display:flex;flex-direction:column;gap:4px}
+.hamburger span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:.3s}
+@media(min-width:960px){.hamburger{display:none}}
+
+/* progress */
+.progress-strip{position:fixed;top:var(--navh);left:0;right:0;height:5px;background:rgba(255,255,255,.15);z-index:199}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s ease;border-radius:0 3px 3px 0}
+
+/* ── LAYOUT ── */
+.shell{display:flex;margin-top:calc(var(--navh)+5px);min-height:calc(100vh - var(--navh) - 5px)}
+
+/* ── SIDEBAR ── */
+.sidebar{
+  width:var(--sidebar);flex-shrink:0;
+  background:var(--primary);color:#fff;
+  position:fixed;top:calc(var(--navh)+5px);bottom:0;left:0;
+  overflow-y:auto;z-index:150;
+  transform:translateX(-100%);transition:transform .35s ease;
+}
+.sidebar.open{transform:translateX(0)}
+@media(min-width:960px){.sidebar{position:sticky;top:0;transform:none;height:calc(100vh - var(--navh) - 5px)}}
+.sb-head{padding:22px 18px 10px;font-size:.68rem;text-transform:uppercase;letter-spacing:2px;color:var(--accent2);font-weight:800}
+.sb-list{list-style:none;padding:30px 10px 30px}
+.sb-item{margin-bottom:3px}
+.sb-btn{
+  width:100%;background:none;border:none;
+  color:rgba(255,255,255,.65);
+  padding:10px 12px;border-radius:10px;
+  text-align:left;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:.87rem;font-weight:700;
+  display:flex;align-items:center;gap:10px;transition:.2s;
+}
+.sb-btn:hover{background:rgba(255,255,255,.09);color:#fff}
+.sb-btn.active{background:var(--accent);color:#fff}
+.sb-btn.done{color:var(--green)}
+.sb-btn .dot{
+  width:20px;height:20px;border-radius:50%;border:2px solid currentColor;
+  display:flex;align-items:center;justify-content:center;font-size:.6rem;flex-shrink:0;
+}
+.sb-btn.done .dot{background:var(--green);border-color:var(--green);color:#fff}
+
+/* ── MAIN ── */
+.main{flex:1;padding:100px 24px 100px;max-width:860px;margin:0 auto;width:100%}
+
+/* ── PAGE TRANSITION ── */
+.page{display:none}
+.page.active{display:block;animation:rise .4s ease}
+@keyframes rise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── TYPOGRAPHY ── */
+.tag{font-size:.68rem;text-transform:uppercase;letter-spacing:2.5px;color:var(--accent);font-weight:800;margin-bottom:6px}
+.ptitle{font-family:'Merriweather',serif;font-size:1.9rem;color:var(--primary);margin-bottom:14px;line-height:1.25}
+.psubtitle{font-size:1rem;color:var(--muted);line-height:1.8;margin-bottom:30px}
+
+/* ── HERO BANNER ── */
+.hero{
+  background:linear-gradient(135deg,var(--primary) 0%,#2a5298 100%);
+  border-radius:20px;padding:40px 36px;color:#fff;margin-bottom:28px;
+  position:relative;overflow:hidden;
+}
+.hero::before{content:'';position:absolute;right:-50px;top:-50px;width:220px;height:220px;border-radius:50%;background:rgba(255,255,255,.06)}
+.hero::after{content:'';position:absolute;right:40px;bottom:-70px;width:170px;height:170px;border-radius:50%;background:rgba(232,69,69,.12)}
+.hero h2{font-family:'Merriweather',serif;font-size:1.5rem;margin-bottom:10px;position:relative}
+.hero p{color:rgba(255,255,255,.8);font-size:.95rem;line-height:1.75;max-width:500px;position:relative}
+.hero-stats{display:flex;gap:30px;margin-top:24px;flex-wrap:wrap;position:relative}
+.hstat .num{font-size:1.9rem;font-weight:900;color:var(--accent2)}
+.hstat .lbl{font-size:.72rem;text-transform:uppercase;letter-spacing:1px;color:rgba(255,255,255,.55)}
+
+/* ── CARD ── */
+.card{
+  background:var(--card);border-radius:16px;padding:26px;margin-bottom:18px;
+  border:1px solid rgba(27,58,107,.07);box-shadow:0 2px 16px rgba(27,58,107,.05);
+}
+.card h3{font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:10px}
+.card h3 .ico{width:34px;height:34px;border-radius:9px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0}
+.card p{color:var(--muted);font-size:.93rem;line-height:1.75}
+
+/* ── ACCORDION ── */
+.accordion{margin-bottom:18px}
+.acc{background:var(--card);border-radius:14px;border:1px solid rgba(27,58,107,.08);margin-bottom:8px;overflow:hidden}
+.acc-head{
+  width:100%;background:none;border:none;cursor:pointer;
+  padding:16px 18px;display:flex;align-items:center;justify-content:space-between;
+  font-family:'Nunito',sans-serif;font-size:.93rem;font-weight:800;color:var(--primary);text-align:left;
+}
+.acc-head:hover{background:rgba(27,58,107,.04)}
+.acc-head .arr{font-size:.8rem;color:var(--accent);transition:transform .3s}
+.acc-head.open .arr{transform:rotate(180deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .4s ease}
+.acc-body.open{max-height:300px}
+.acc-inner{padding:0 18px 18px;color:var(--muted);font-size:.9rem;line-height:1.75;border-top:1px solid rgba(27,58,107,.07)}
+
+/* ── NARRATIVE / SLIDER ── */
+.narrative{background:var(--card);border-radius:16px;border:1px solid rgba(27,58,107,.07);overflow:hidden;margin-bottom:18px;box-shadow:0 2px 16px rgba(27,58,107,.05)}
+.narr-slides{display:flex;transition:transform .45s cubic-bezier(.4,0,.2,1)}
+.narr-slide{min-width:100%;padding:32px}
+.narr-slide h4{font-family:'Merriweather',serif;font-size:1.1rem;color:var(--primary);margin-bottom:10px}
+.narr-slide p{color:var(--muted);font-size:.92rem;line-height:1.75}
+.narr-slide .slide-img{
+  width:100%;height:140px;border-radius:12px;margin-bottom:18px;
+  display:flex;align-items:center;justify-content:center;font-size:3rem;
+  background:linear-gradient(135deg,var(--primary),#2a5298);
+}
+.narr-controls{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-top:1px solid rgba(27,58,107,.08);background:rgba(27,58,107,.03)}
+.narr-btn{
+  background:var(--primary);color:#fff;border:none;cursor:pointer;
+  padding:8px 20px;border-radius:8px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;
+  transition:.2s;
+}
+.narr-btn:hover{background:var(--accent)}
+.narr-btn:disabled{background:rgba(27,58,107,.2);cursor:not-allowed}
+.narr-dots{display:flex;gap:7px}
+.ndot{width:10px;height:10px;border-radius:50%;background:rgba(27,58,107,.2);cursor:pointer;transition:.2s}
+.ndot.active{background:var(--accent);transform:scale(1.25)}
+
+/* ── HOTSPOT ── */
+.hotspot-wrap{background:var(--card);border-radius:16px;border:1px solid rgba(27,58,107,.07);padding:28px;margin-bottom:18px}
+.hotspot-wrap h3{font-size:1rem;font-weight:800;color:var(--primary);margin-bottom:16px}
+.hotspot-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.hotspot-item{
+  background:var(--bg);border-radius:12px;border:2px solid transparent;
+  cursor:pointer;padding:18px;text-align:center;transition:.25s;position:relative;overflow:hidden;
+}
+.hotspot-item:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,69,69,.15)}
+.hotspot-item.revealed{border-color:var(--green);background:rgba(39,174,96,.05)}
+.hotspot-item .hs-icon{font-size:2rem;margin-bottom:8px}
+.hotspot-item .hs-title{font-weight:800;font-size:.9rem;color:var(--primary);margin-bottom:6px}
+.hotspot-item .hs-body{font-size:.82rem;color:var(--muted);line-height:1.6;display:none}
+.hotspot-item.revealed .hs-body{display:block}
+.hotspot-item .reveal-hint{font-size:.72rem;color:var(--accent);font-weight:700;margin-top:6px}
+.hotspot-item.revealed .reveal-hint{display:none}
+
+/* ── MCQ QUIZ ── */
+.quiz-wrap{background:var(--card);border-radius:16px;border:1px solid rgba(27,58,107,.07);padding:28px;margin-bottom:18px;box-shadow:0 2px 16px rgba(27,58,107,.05)}
+.quiz-q{font-weight:800;font-size:1rem;color:var(--primary);margin-bottom:6px}
+.quiz-hint{font-size:.82rem;color:var(--muted);margin-bottom:16px}
+.quiz-opts{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
+.qopt{
+  background:var(--bg);border:2px solid transparent;border-radius:12px;
+  padding:13px 16px;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.9rem;
+  font-weight:700;color:var(--text);display:flex;align-items:center;gap:12px;transition:.2s;text-align:left;
+}
+.qopt:hover{border-color:var(--primary);background:rgba(27,58,107,.05)}
+.qopt.selected{border-color:var(--primary);background:rgba(27,58,107,.08)}
+.qopt.correct{border-color:var(--green);background:rgba(39,174,96,.1);color:var(--green)}
+.qopt.wrong{border-color:var(--accent);background:rgba(232,69,69,.08);color:var(--accent)}
+.qopt .badge{
+  width:26px;height:26px;border-radius:50%;border:2px solid currentColor;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.7rem;font-weight:900;
+}
+.quiz-feedback{padding:12px 16px;border-radius:10px;font-size:.88rem;font-weight:700;display:none;margin-bottom:12px}
+.quiz-feedback.show{display:block}
+.quiz-feedback.ok{background:rgba(39,174,96,.12);color:var(--green);border:1px solid rgba(39,174,96,.3)}
+.quiz-feedback.nope{background:rgba(232,69,69,.1);color:var(--accent);border:1px solid rgba(232,69,69,.25)}
+.quiz-submit{
+  background:var(--primary);color:#fff;border:none;border-radius:10px;
+  padding:11px 28px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  cursor:pointer;transition:.2s;
+}
+.quiz-submit:hover{background:var(--accent)}
+.quiz-submit:disabled{opacity:.4;cursor:not-allowed}
+.quiz-retry{
+  background:none;color:var(--accent);border:2px solid var(--accent);border-radius:10px;
+  padding:9px 22px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;
+  cursor:pointer;margin-left:10px;transition:.2s;
+}
+.quiz-retry:hover{background:var(--accent);color:#fff}
+
+/* ── COMPLETION ── */
+.completion{
+  background:linear-gradient(135deg,var(--primary),#1a6348);
+  border-radius:20px;padding:48px 40px;color:#fff;text-align:center;
+  position:relative;overflow:hidden;
+}
+.completion::before{content:'🎉';position:absolute;font-size:8rem;opacity:.07;top:-10px;right:-10px}
+.completion .badge-circle{
+  width:90px;height:90px;border-radius:50%;
+  background:linear-gradient(135deg,var(--accent2),var(--accent));
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;margin:0 auto 20px;
+  box-shadow:0 8px 30px rgba(247,164,64,.4);
+}
+.completion h2{font-family:'Merriweather',serif;font-size:1.7rem;margin-bottom:12px}
+.completion p{color:rgba(255,255,255,.8);line-height:1.75;max-width:420px;margin:0 auto 24px}
+.cert-btn{
+  background:#fff;color:var(--primary);border:none;border-radius:12px;
+  padding:13px 36px;font-family:'Nunito',sans-serif;font-weight:900;font-size:.95rem;
+  cursor:pointer;transition:.2s;
+}
+.cert-btn:hover{background:var(--accent2);color:#fff}
+
+/* ── NEXT BTN ── */
+.page-nav{display:flex;justify-content:flex-end;margin-top:32px;gap:12px}
+.btn-next,.btn-prev{
+  background:var(--primary);color:#fff;border:none;border-radius:12px;
+  padding:12px 32px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;
+  cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px;
+}
+.btn-next:hover{background:var(--accent)}
+.btn-prev{background:var(--bg);color:var(--primary);border:2px solid rgba(27,58,107,.15)}
+.btn-prev:hover{background:rgba(27,58,107,.08)}
+
+/* ── OVERLAY ── */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:140;display:none}
+.overlay.show{display:block}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:rgba(0,0,0,.05)}
+::-webkit-scrollbar-thumb{background:rgba(27,58,107,.25);border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav class="nav">
+  <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <div class="brand">ADAPT<span>Learn</span></div>
+  <div class="course-name">Workplace Safety Fundamentals</div>
+</nav>
+
+<!-- PROGRESS STRIP -->
+<div class="progress-strip">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<!-- OVERLAY (mobile sidebar close) -->
+<div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+<div class="shell">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-head">📚 Course Units</div>
+    <ul class="sb-list" id="menuList">
+      <li class="sb-item"><button class="sb-btn active" onclick="goTo(0)" id="menu0"><span class="dot">1</span>Welcome & Overview</button></li>
+      <li class="sb-item"><button class="sb-btn" onclick="goTo(1)" id="menu1"><span class="dot">2</span>Key Concepts</button></li>
+      <li class="sb-item"><button class="sb-btn" onclick="goTo(2)" id="menu2"><span class="dot">3</span>Learn by Steps</button></li>
+      <li class="sb-item"><button class="sb-btn" onclick="goTo(3)" id="menu3"><span class="dot">4</span>Explore & Discover</button></li>
+      <li class="sb-item"><button class="sb-btn" onclick="goTo(4)" id="menu4"><span class="dot">5</span>Test Your Knowledge</button></li>
+      <li class="sb-item"><button class="sb-btn" onclick="goTo(5)" id="menu5"><span class="dot">🏆</span>Course Complete</button></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- PAGE 0: WELCOME -->
+    <section class="page active" id="page0">
+      <div class="tag">Unit 1 · Introduction</div>
+      <h1 class="ptitle">Welcome to Workplace Safety</h1>
+      <p class="psubtitle">In this course you will learn fundamental concepts of workplace safety. This is an interactive experience — scroll, click, and explore!</p>
+
+      <div class="hero">
+        <h2>Welcome! 🙏</h2>
+        <p>This course will teach you essential rules, responsibilities and best practices of workplace safety. Each unit has something new — accordions, sliders, quizzes and more!</p>
+        <div class="hero-stats">
+          <div class="hstat"><div class="num">5</div><div class="lbl">Units</div></div>
+          <div class="hstat"><div class="num">20</div><div class="lbl">Minutes</div></div>
+          <div class="hstat"><div class="num">100%</div><div class="lbl">Interactive</div></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="ico">🎯</span> What Will You Learn?</h3>
+        <p>After this course you will understand: identifying workplace hazards, following safety protocols, knowing emergency procedures, and ensuring yours and others' safety.</p>
+      </div>
+      <div class="card">
+        <h3><span class="ico">🖱️</span> How to Navigate the Course?</h3>
+        <p>Units are listed in the left sidebar. Each unit has a <strong>"Next"</strong> button at the end. You can also go directly to any unit. You'll get a certificate after completing all units!</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-next" onclick="nextPage(0)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- PAGE 1: KEY CONCEPTS (ACCORDION) -->
+    <section class="page" id="page1">
+      <div class="tag">Unit 2 · Key Concepts</div>
+      <h1 class="ptitle">Types of Workplace Hazards</h1>
+      <p class="psubtitle">Click the accordion items below to learn details about each type of hazard. This is ADAPT's <strong>Accordion Component</strong>.</p>
+
+      <div class="accordion">
+        <div class="acc">
+          <button class="acc-head" onclick="toggleAcc(this)">
+            ⚡ Physical Hazards <span class="arr">▼</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">Noise, vibration, extreme temperatures, radiation, and slipping/tripping are included in this category. These are the most common workplace hazards. They can be reduced by wearing PPE (Personal Protective Equipment) and maintaining safe walkways.</div>
+          </div>
+        </div>
+        <div class="acc">
+          <button class="acc-head" onclick="toggleAcc(this)">
+            🧪 Chemical Hazards <span class="arr">▼</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">Toxic gases, corrosive liquids, flammable materials and carcinogens are included in chemical hazards. Always read SDS (Safety Data Sheet) and ensure proper storage. Get training before handling any chemical.</div>
+          </div>
+        </div>
+        <div class="acc">
+          <button class="acc-head" onclick="toggleAcc(this)">
+            🦠 Biological Hazards <span class="arr">▼</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">Bacteria, viruses, fungi and parasites are biological hazards. These are more common in healthcare and food industries. Regular hand washing, proper sanitization and PPE use protect against biological hazards.</div>
+          </div>
+        </div>
+        <div class="acc">
+          <button class="acc-head" onclick="toggleAcc(this)">
+            😰 Ergonomic Hazards <span class="arr">▼</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">Repetitive motion, poor posture, heavy lifting and uncomfortable workstations create ergonomic hazards. Adjustable chairs, keyboard placement and taking regular breaks help reduce these hazards. This is very important to prevent musculoskeletal disorders.</div>
+          </div>
+        </div>
+        <div class="acc">
+          <button class="acc-head" onclick="toggleAcc(this)">
+            🧠 Psychosocial Hazards <span class="arr">▼</span>
+          </button>
+          <div class="acc-body">
+            <div class="acc-inner">Work stress, bullying, harassment and workload imbalance are psychosocial hazards. Talking to HR, using counseling services and creating an open communication culture help manage these hazards.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="ico">💡</span>Remember</h3>
+        <p>Hazard ≠ Risk. <strong>Hazard</strong> is something that can cause harm. <strong>Risk</strong> is the probability of that harm occurring. Identifying hazards is the first step, risk assessment comes after.</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-prev" onclick="prevPage(1)">← Back</button>
+        <button class="btn-next" onclick="nextPage(1)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- PAGE 2: NARRATIVE / SLIDER -->
+    <section class="page" id="page2">
+      <div class="tag">Unit 3 · Step-by-Step</div>
+      <h1 class="ptitle">Emergency Response Steps</h1>
+      <p class="psubtitle">Navigate the slides using arrows. This is ADAPT's <strong>Narrative Component</strong> — it shows steps one after another.</p>
+
+      <div class="narrative">
+        <div class="narr-slides" id="narrSlides">
+
+          <!-- Slide 1 -->
+          <div class="narr-slide">
+            <div class="slide-img">🚨</div>
+            <h4>Step 1: Assess the Situation</h4>
+            <p>In any emergency, first check the safety of yourself and others. Don't panic. Determine if the scene is safe or not. If the scene is unsafe, stay away and call the authorities. Before taking any action, pause for a second and think.</p>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="narr-slide">
+            <div class="slide-img">📞</div>
+            <h4>Step 2: Alert & Call for Help</h4>
+            <p>Call emergency services immediately (112 or company helpline). Clearly state your name, location and situation. Stay on the phone until the operator says you can hang up. Also alert a colleague.</p>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="narr-slide">
+            <div class="slide-img">🚑</div>
+            <h4>Step 3: First Aid (If Trained)</h4>
+            <p>If you are trained in first aid, provide basic help. Control bleeding, perform CPR if needed. Don't move anyone forcefully — especially if spinal injury is suspected. You should know the location of the first aid kit beforehand.</p>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="narr-slide">
+            <div class="slide-img">🏃</div>
+            <h4>Step 4: Evacuate if Needed</h4>
+            <p>In case of fire or gas leak, evacuate the building immediately. Use emergency exits — don't use the lift. Go to the muster point and report attendance. Report to your supervisor or safety officer. Don't leave anyone behind.</p>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="narr-slide">
+            <div class="slide-img">📝</div>
+            <h4>Step 5: Report & Document</h4>
+            <p>Every incident — no matter how small — must be reported. Fill out the incident report form, write the date/time/location and note the names of witnesses. This helps prevent similar accidents in the future and is also a legal requirement.</p>
+          </div>
+
+        </div>
+        <div class="narr-controls">
+          <button class="narr-btn" id="prevSlide" onclick="changeSlide(-1)" disabled>← Previous</button>
+          <div class="narr-dots" id="narrDots"></div>
+          <button class="narr-btn" id="nextSlide" onclick="changeSlide(1)">Next →</button>
+        </div>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-prev" onclick="prevPage(2)">← Back</button>
+        <button class="btn-next" onclick="nextPage(2)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- PAGE 3: HOTSPOT / REVEAL -->
+    <section class="page" id="page3">
+      <div class="tag">Unit 4 · Explore</div>
+      <h1 class="ptitle">Safety Equipment Explorer</h1>
+      <p class="psubtitle">Click on each item and details will be revealed. This is ADAPT's <strong>Hotspot / Reveal Component</strong> — click to learn!</p>
+
+      <div class="hotspot-wrap">
+        <h3>🖱️ Click on any item</h3>
+        <div class="hotspot-grid">
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">⛑️</div>
+            <div class="hs-title">Safety Helmet</div>
+            <div class="hs-body">Protects the head from falling objects and impact. Mandatory on construction sites. Use only ISI/ANSI certified helmets. Replace if damaged.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">🥽</div>
+            <div class="hs-title">Safety Goggles</div>
+            <div class="hs-body">Protect eyes from chemicals, dust, and flying particles. Goggles with side shields provide better protection. Contact lens users should definitely wear them.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">🧤</div>
+            <div class="hs-title">Safety Gloves</div>
+            <div class="hs-body">Protect hands from cuts, burns, chemicals and vibration. Select gloves based on the type of hazard — chemical resistant, cut resistant, or thermal gloves.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">👢</div>
+            <div class="hs-title">Safety Boots</div>
+            <div class="hs-body">Steel toe boots protect feet from heavy objects. Anti-slip soles prevent slipping. Insulated boots are required in areas with electrical hazards.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">😷</div>
+            <div class="hs-title">Respirator Mask</div>
+            <div class="hs-body">Protects the respiratory system from dust, fumes, and harmful gases. N95 mask filters fine particles. Do a proper fit test — gaps compromise protection.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+          <div class="hotspot-item" onclick="revealHotspot(this)">
+            <div class="hs-icon">🦺</div>
+            <div class="hs-title">High-Vis Vest</div>
+            <div class="hs-body">Keeps workers visible in road construction and low-light areas. Use ANSI Class 2 or 3 vests in traffic areas. Don't use damaged or dirty vests.</div>
+            <div class="reveal-hint">👆 Click to reveal</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3><span class="ico">✅</span> Reveal Everything!</h3>
+        <p>Explore all 6 items. Just wearing PPE is not enough — you must wear the right PPE, in the right size, and in the right way. Regular inspection and maintenance are also necessary.</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-prev" onclick="prevPage(3)">← Back</button>
+        <button class="btn-next" onclick="nextPage(3)">Continue →</button>
+      </div>
+    </section>
+
+    <!-- PAGE 4: MCQ QUIZ -->
+    <section class="page" id="page4">
+      <div class="tag">Unit 5 · Assessment</div>
+      <h1 class="ptitle">Test Your Knowledge</h1>
+      <p class="psubtitle">Test what you've learned! This is ADAPT's <strong>MCQ Component</strong>. Choose the correct answer and submit.</p>
+
+      <!-- Q1 -->
+      <div class="quiz-wrap">
+        <div class="quiz-q">Q1. What should be the first step in any emergency?</div>
+        <div class="quiz-hint">Select one option and then submit</div>
+        <div class="quiz-opts" id="q1opts">
+          <button class="qopt" onclick="selectOpt(this,'q1')"><span class="badge">A</span>Start helping the victim immediately</button>
+          <button class="qopt" onclick="selectOpt(this,'q1')"><span class="badge">B</span>Assess the safety of the scene</button>
+          <button class="qopt" onclick="selectOpt(this,'q1')"><span class="badge">C</span>Take photos for social media</button>
+          <button class="qopt" onclick="selectOpt(this,'q1')"><span class="badge">D</span>Wait for supervisor</button>
+        </div>
+        <div class="quiz-feedback" id="q1fb"></div>
+        <button class="quiz-submit" id="q1sub" onclick="checkAnswer('q1',1,'B','✅ Absolutely correct! Assessing scene safety first is necessary. Your safety comes first.','❌ No. Don't panic — first check the scene safety, then help.')">Submit</button>
+        <button class="quiz-retry" id="q1retry" style="display:none" onclick="resetQ('q1',4)">↺ Retry</button>
+      </div>
+
+      <!-- Q2 -->
+      <div class="quiz-wrap">
+        <div class="quiz-q">Q2. What is the full form of PPE?</div>
+        <div class="quiz-hint">Select the correct option</div>
+        <div class="quiz-opts" id="q2opts">
+          <button class="qopt" onclick="selectOpt(this,'q2')"><span class="badge">A</span>Public Protection Equipment</button>
+          <button class="qopt" onclick="selectOpt(this,'q2')"><span class="badge">B</span>Personal Protective Equipment</button>
+          <button class="qopt" onclick="selectOpt(this,'q2')"><span class="badge">C</span>Private Professional Ensemble</button>
+          <button class="qopt" onclick="selectOpt(this,'q2')"><span class="badge">D</span>Protective Performance Evaluation</button>
+        </div>
+        <div class="quiz-feedback" id="q2fb"></div>
+        <button class="quiz-submit" id="q2sub" onclick="checkAnswer('q2',1,'B','✅ Correct! Personal Protective Equipment — all the items that protect your body from hazards.','❌ No. The correct answer is Personal Protective Equipment — like helmets, gloves, goggles etc.')">Submit</button>
+        <button class="quiz-retry" id="q2retry" style="display:none" onclick="resetQ('q2',4)">↺ Retry</button>
+      </div>
+
+      <!-- Q3 -->
+      <div class="quiz-wrap">
+        <div class="quiz-q">Q3. What should you use to leave the building in a fire emergency?</div>
+        <div class="quiz-hint">Think carefully!</div>
+        <div class="quiz-opts" id="q3opts">
+          <button class="qopt" onclick="selectOpt(this,'q3')"><span class="badge">A</span>Lift / Elevator</button>
+          <button class="qopt" onclick="selectOpt(this,'q3')"><span class="badge">B</span>Emergency Exit Stairs</button>
+          <button class="qopt" onclick="selectOpt(this,'q3')"><span class="badge">C</span>Jump out of the window</button>
+          <button class="qopt" onclick="selectOpt(this,'q3')"><span class="badge">D</span>Wait for the fire to end</button>
+        </div>
+        <div class="quiz-feedback" id="q3fb"></div>
+        <button class="quiz-submit" id="q3sub" onclick="checkAnswer('q3',1,'B','✅ Excellent! Always use emergency stairs. In a fire, elevators can stop and trap you.','❌ Wrong. Never use lifts in a fire emergency — Emergency Exit Stairs are the safe option.')">Submit</button>
+        <button class="quiz-retry" id="q3retry" style="display:none" onclick="resetQ('q3',4)">↺ Retry</button>
+      </div>
+
+      <div id="quizDoneMsg" style="display:none" class="card">
+        <h3><span class="ico">🎉</span>Quiz Complete!</h3>
+        <p>Great! You've attempted all questions. Now continue to complete the course and receive your certificate!</p>
+      </div>
+
+      <div class="page-nav">
+        <button class="btn-prev" onclick="prevPage(4)">← Back</button>
+        <button class="btn-next" id="finishBtn" onclick="nextPage(4)">Finish Course 🏆</button>
+      </div>
+    </section>
+
+    <!-- PAGE 5: COMPLETION -->
+    <section class="page" id="page5">
+      <div class="tag">🏆 Course Complete</div>
+      <h1 class="ptitle">Congratulations!</h1>
+      <p class="psubtitle">You have successfully completed the Workplace Safety Fundamentals course!</p>
+
+      <div class="completion">
+        <div class="badge-circle">🏅</div>
+        <h2>Course Completed!</h2>
+        <p>You have completed all 5 units. You are now fully trained in workplace hazards, PPE, emergency response and safety protocols.</p>
+        <button class="cert-btn" onclick="printCert()">🖨️ Print Certificate</button>
+      </div>
+
+      <div style="margin-top:24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px">
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:8px">📚</div>
+          <div style="font-weight:800;font-size:1.1rem;color:var(--primary)">5 / 5</div>
+          <div style="font-size:.8rem;color:var(--muted)">Units Complete</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:8px">✅</div>
+          <div style="font-weight:800;font-size:1.1rem;color:var(--primary)">100%</div>
+          <div style="font-size:.8rem;color:var(--muted)">Progress</div>
+        </div>
+        <div class="card" style="text-align:center">
+          <div style="font-size:2rem;margin-bottom:8px">🎯</div>
+          <div style="font-weight:800;font-size:1.1rem;color:var(--primary)" id="quizScore">Quiz Complete</div>
+          <div style="font-size:.8rem;color:var(--muted)">Assessment</div>
+        </div>
+      </div>
+
+      <div class="page-nav" style="justify-content:center;margin-top:28px">
+        <button class="btn-prev" onclick="goTo(0)">🔄 Restart Course</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+// ── STATE ──
+let current = 0;
+const total = 6;
+const completed = new Array(total).fill(false);
+let narrCurrent = 0;
+const narrTotal = 5;
+
+// Quiz tracking
+const quizAnswered = {q1:false, q2:false, q3:false};
+const quizCorrect  = {q1:false, q2:false, q3:false};
+
+// ── SIDEBAR TOGGLE ──
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('show');
+}
+
+// ── NAVIGATION ──
+function goTo(idx){
+  document.getElementById('page'+current).classList.remove('active');
+  document.getElementById('menu'+current).classList.remove('active');
+  current = idx;
+  document.getElementById('page'+current).classList.add('active');
+  document.getElementById('menu'+current).classList.add('active');
+  updateProgress();
+  window.scrollTo({top:0,behavior:'smooth'});
+  // close sidebar on mobile
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+function nextPage(from){
+  completed[from] = true;
+  markDone(from);
+  if(from < total-1) goTo(from+1);
+  // check quiz done
+  if(from===4) checkQuizAllDone();
+}
+
+function prevPage(from){
+  if(from > 0) goTo(from-1);
+}
+
+function markDone(idx){
+  const btn = document.getElementById('menu'+idx);
+  btn.classList.add('done');
+  btn.querySelector('.dot').textContent = '✓';
+}
+
+function updateProgress(){
+  const done = completed.filter(Boolean).length;
+  const pct = Math.round((done / (total-1)) * 100);
+  document.getElementById('progressFill').style.width = pct+'%';
+}
+
+// ── ACCORDION ──
+function toggleAcc(btn){
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // close all
+  document.querySelectorAll('.acc-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.acc-head').forEach(b=>b.classList.remove('open'));
+  if(!isOpen){
+    body.classList.add('open');
+    btn.classList.add('open');
+  }
+}
+
+// ── NARRATIVE SLIDER ──
+function initNarr(){
+  const dots = document.getElementById('narrDots');
+  dots.innerHTML='';
+  for(let i=0;i<narrTotal;i++){
+    const d=document.createElement('div');
+    d.className='ndot'+(i===0?' active':'');
+    d.onclick=()=>jumpSlide(i);
+    dots.appendChild(d);
+  }
+}
+
+function changeSlide(dir){
+  narrCurrent = Math.max(0,Math.min(narrTotal-1, narrCurrent+dir));
+  applySlide();
+}
+
+function jumpSlide(idx){
+  narrCurrent=idx;
+  applySlide();
+}
+
+function applySlide(){
+  document.getElementById('narrSlides').style.transform=`translateX(-${narrCurrent*100}%)`;
+  document.getElementById('prevSlide').disabled = narrCurrent===0;
+  document.getElementById('nextSlide').disabled = narrCurrent===narrTotal-1;
+  document.querySelectorAll('.ndot').forEach((d,i)=>d.classList.toggle('active',i===narrCurrent));
+}
+
+// ── HOTSPOT ──
+function revealHotspot(el){
+  el.classList.toggle('revealed');
+}
+
+// ── MCQ ──
+function selectOpt(btn, qid){
+  document.querySelectorAll('#'+qid+'opts .qopt').forEach(b=>{
+    b.classList.remove('selected');
+  });
+  btn.classList.add('selected');
+}
+
+function checkAnswer(qid, tries, correct, okMsg, nopeMsg){
+  const opts = document.querySelectorAll('#'+qid+'opts .qopt');
+  const selected = document.querySelector('#'+qid+'opts .qopt.selected');
+  const fb = document.getElementById(qid+'fb');
+  const sub = document.getElementById(qid+'sub');
+  const retry = document.getElementById(qid+'retry');
+
+  if(!selected){alert('Please select an option first!');return;}
+
+  const letters=['A','B','C','D'];
+  const sel = letters[Array.from(opts).indexOf(selected)];
+  quizAnswered[qid] = true;
+
+  if(sel===correct){
+    selected.classList.add('correct');
+    fb.className='quiz-feedback show ok';
+    fb.textContent=okMsg;
+    quizCorrect[qid]=true;
+  } else {
+    selected.classList.add('wrong');
+    opts.forEach((b,i)=>{ if(letters[i]===correct) b.classList.add('correct'); });
+    fb.className='quiz-feedback show nope';
+    fb.textContent=nopeMsg;
+    retry.style.display='inline-block';
+  }
+  sub.disabled=true;
+  opts.forEach(b=>b.onclick=null);
+  checkQuizAllDone();
+}
+
+function resetQ(qid, n){
+  const opts=document.querySelectorAll('#'+qid+'opts .qopt');
+  opts.forEach((b,i)=>{
+    b.className='qopt';
+    const letters=['A','B','C','D'];
+    b.onclick=()=>selectOpt(b,qid);
+  });
+  document.getElementById(qid+'fb').className='quiz-feedback';
+  document.getElementById(qid+'sub').disabled=false;
+  document.getElementById(qid+'retry').style.display='none';
+  quizAnswered[qid]=false;
+  quizCorrect[qid]=false;
+}
+
+function checkQuizAllDone(){
+  if(quizAnswered.q1&&quizAnswered.q2&&quizAnswered.q3){
+    document.getElementById('quizDoneMsg').style.display='block';
+    const score = [quizCorrect.q1,quizCorrect.q2,quizCorrect.q3].filter(Boolean).length;
+    document.getElementById('quizScore').textContent = score+'/3 Correct';
+  }
+}
+
+// ── CERTIFICATE PRINT ──
+function printCert(){
+  const win=window.open('','_blank');
+  win.document.write(`<!DOCTYPE html><html><head><title>Certificate</title>
+  <style>
+    body{font-family:Georgia,serif;text-align:center;padding:60px 40px;background:#fff;color:#1b3a6b}
+    h1{font-size:2.5rem;margin-bottom:10px;color:#1b3a6b}
+    h2{font-size:1.4rem;color:#e84545;margin-bottom:30px}
+    .border{border:8px double #1b3a6b;padding:60px;display:inline-block;width:90%;max-width:700px}
+    .date{color:#6b7a99;font-size:.9rem;margin-top:20px}
+    .badge{font-size:4rem;margin-bottom:20px}
+    p{font-size:1.1rem;line-height:1.8;color:#333}
+  </style></head><body>
+  <div class="border">
+    <div class="badge">🏅</div>
+    <h1>Certificate of Completion</h1>
+    <h2>Workplace Safety Fundamentals</h2>
+    <p>This is to certify that</p>
+    <h2 style="font-size:1.8rem;color:#1b3a6b">Course Participant</h2>
+    <p>has successfully completed the <strong>Workplace Safety Fundamentals</strong> course.<br><br>
+    All 5 units and interactive assessments<br>
+    have been successfully completed.</p>
+    <div class="date">Completion Date: ${new Date().toLocaleDateString('en-IN',{year:'numeric',month:'long',day:'numeric'})}</div>
+    <br>
+    <div style="font-size:.8rem;color:#aaa;margin-top:20px">ADAPTLearn eLearning Platform</div>
+  </div>
+  </body></html>`);
+  win.document.close();
+  setTimeout(()=>win.print(),500);
+}
+
+// ── INIT ──
+initNarr();
+</script>
+</body>
+</html>
